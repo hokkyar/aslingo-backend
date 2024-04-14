@@ -22,40 +22,34 @@ const submit = () => {
 </script>
 
 <template>
-    <GuestLayout>
-        <Head title="Forgot Password" />
+  <GuestLayout>
 
-        <div class="mb-4 text-sm text-gray-600">
-            Forgot your password? No problem. Just let us know your email address and we will email you a password reset
-            link that will allow you to choose a new one.
-        </div>
+    <Head title="Forgot Password" />
 
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-            {{ status }}
-        </div>
+    <div class="mb-4 text-sm text-gray-600">
+      Forgot your password? No problem. Just let us know your email address and we will email you a password reset
+      link that will allow you to choose a new one.
+    </div>
 
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="email" value="Email" />
+    <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+      {{ status }}
+    </div>
 
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
+    <form @submit.prevent="submit">
+      <div>
+        <InputLabel for="email" value="Email" />
 
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
+        <TextInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autofocus
+          autocomplete="username" />
 
-            <div class="flex items-center justify-end mt-4">
-                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Email Password Reset Link
-                </PrimaryButton>
-            </div>
-        </form>
-    </GuestLayout>
+        <InputError class="mt-2" :message="form.errors.email" />
+      </div>
+
+      <div class="flex items-center justify-end mt-4">
+        <PrimaryButton title="Email Password Reset Link" :class="{ 'opacity-25': form.processing }"
+          :disabled="form.processing" />
+
+      </div>
+    </form>
+  </GuestLayout>
 </template>
