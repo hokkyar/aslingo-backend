@@ -31,7 +31,7 @@ class AuthController extends Controller
     if (!$token = auth('api')->attempt($credentials)) {
       return response()->json([
         'error' => 'bad_request',
-        'message' => 'Email atau password salah'
+        'message' => 'Email atau password salah',
       ], 401);
     }
 

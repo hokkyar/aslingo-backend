@@ -33,7 +33,7 @@ class HomeController extends Controller
 
     return response([
       'data' => $data,
-      'recent_activity' => $latest_check->material
+      'recent_activity' => $latest_check->material ?? null
     ]);
   }
 }
