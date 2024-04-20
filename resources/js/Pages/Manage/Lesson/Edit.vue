@@ -82,14 +82,14 @@ export default {
                     accept="image/*" />
                 </div>
 
-                <div class="flex flex-col gap-2">
+                <!-- <div class="flex flex-col gap-2">
                   <InputLabel for="class" value="Class" />
                   <select id="class" v-model="form.class" class="select border border-gray-800 w-full">
                     <option value="7">7</option>
                     <option value="8">8</option>
                     <option value="9">9</option>
                   </select>
-                </div>
+                </div> -->
 
                 <div class="flex items-center gap-4">
                   <PrimaryButton title="Save" :isLink="false" :disabled="form.processing" />

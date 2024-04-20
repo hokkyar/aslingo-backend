@@ -37,6 +37,7 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
 
   // LESSON
   Route::get('/dashboard/manage/lesson', [LessonController::class, 'index'])->name('manage.lesson.index');
+  Route::post('/lesson/edit-order', [LessonController::class, 'edit_order'])->name('manage.lesson.edit_order');
   Route::get('/dashboard/manage/lesson/edit/{id}', [LessonController::class, 'edit'])->name('manage.lesson.edit');
   Route::post('/dashboard/manage/lesson', [LessonController::class, 'store'])->name('manage.lesson.store');
   Route::get('/dashboard/manage/lesson/{id}', [LessonController::class, 'detail'])->name('manage.lesson.detail');

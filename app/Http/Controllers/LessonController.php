@@ -10,12 +10,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
-
 class LessonController extends Controller
 {
   public function index()
   {
-    $lessons = Lesson::all();
+    $lessons = Lesson::orderBy('order')->get();
     return Inertia::render('Manage/Lesson/Index', ['lessons' => $lessons]);
   }
 
@@ -45,10 +44,15 @@ class LessonController extends Controller
       $request->cover->storeAs('public/images', $file_name);
     }
 
+    $last_item = Lesson::where('class', $request->class)
+      ->orderBy('order', 'desc')
+      ->first();
+
     Lesson::create([
       'lesson_name' => $request->lesson_name,
       'cover' => $file_name,
-      'class' => $request->class
+      'class' => $request->class,
+      'order' => $last_item->order + 1
     ]);
   }
 
@@ -83,10 +87,21 @@ class LessonController extends Controller
   public function destroy(string $id)
   {
     $lesson = Lesson::find($id);
+    Lesson::where('class', $lesson->class)
+      ->where('order', '>', $lesson->order)
+      ->decrement('order');
     if ($lesson->cover !== 'default.png') {
       Storage::delete('public/images/' . $lesson->cover);
     }
     $lesson->delete();
+  }
+
+  public function edit_order(Request $request)
+  {
+    $new_ids = $request->orderedIds;
+    for ($i = 0; $i < count($new_ids); $i++) {
+      Lesson::where('id', $new_ids[$i])->update(['order' => $i + 1]);
+    }
   }
 
   // API
