@@ -16,9 +16,9 @@ return new class extends Migration
       $table->unsignedInteger('order')->after('id')->nullable();
     });
 
-    $classes = DB::table('lessons')->select('class')->distinct()->pluck('class');
-    foreach ($classes as $class) {
-      $materials = DB::table('materials')->where('class', $class)->orderBy('id')->get();
+    $lessonIds = DB::table('materials')->select('id_lesson')->distinct()->pluck('id_lesson');
+    foreach ($lessonIds as $lessonId) {
+      $materials = DB::table('materials')->where('id_lesson', $lessonId)->orderBy('id')->get();
       $order = 1;
       foreach ($materials as $material) {
         DB::table('materials')->where('id', $material->id)->update(['order' => $order]);

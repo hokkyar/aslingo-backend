@@ -49,6 +49,10 @@ class MaterialController extends Controller
       $request->ilustration->storeAs('public/images', $ilustration);
     }
 
+    $last_item = Material::where('id_lesson', $id)
+      ->orderBy('order', 'desc')
+      ->first();
+
     Material::create([
       'id_lesson' => $id,
       'material_name' => $request->material_name,
@@ -58,6 +62,7 @@ class MaterialController extends Controller
       'head_pic' => $head_pic,
       'ilustration' => $ilustration,
       'video' => $request->video,
+      'order' => $last_item->order + 1,
     ]);
 
     return to_route('manage.lesson.detail', $id);
@@ -115,9 +120,13 @@ class MaterialController extends Controller
     return to_route('manage.lesson.detail', $id);
   }
 
-  public function destroy(string $id)
+  public function destroy(string $id, string $material_id)
   {
-    $material = Material::find($id);
+    $material = Material::find($material_id);
+    Material::where('id_lesson', $id)
+      ->where('order', '>', $material->order)
+      ->decrement('order');
+
     if ($material->cover !== 'default.png') {
       Storage::delete('public/images/' . $material->cover);
     }
@@ -128,6 +137,14 @@ class MaterialController extends Controller
       Storage::delete('public/images/' . $material->ilustration);
     }
     $material->delete();
+  }
+
+  public function edit_order(Request $request)
+  {
+    $new_ids = $request->orderedIds;
+    for ($i = 0; $i < count($new_ids); $i++) {
+      Material::where('id', $new_ids[$i])->update(['order' => $i + 1]);
+    }
   }
 
   // API

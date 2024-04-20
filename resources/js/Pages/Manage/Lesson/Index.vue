@@ -81,7 +81,7 @@ export default {
       this.isLoading = true
       const items = document.getElementById(elementId).getElementsByTagName('li')
       const orderedIds = Array.from(items).map(li => parseInt(li.dataset.id))
-      router.post('/dashboard/manage/lesson/edit-order', { orderedIds }, {
+      router.post(route('manage.lesson.edit_order'), { orderedIds }, {
         onSuccess: () => {
           orderClass7.close()
           orderClass8.close()
@@ -119,7 +119,6 @@ export default {
 <template>
 
   <Head title="Manage Lesson" />
-
 
   <AuthenticatedLayout>
     <template #header>

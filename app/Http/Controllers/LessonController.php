@@ -21,7 +21,7 @@ class LessonController extends Controller
   public function detail(string $id)
   {
     $lesson = Lesson::find($id);
-    $materials = Material::where('id_lesson', '=', $id)->get();
+    $materials = Material::where('id_lesson', '=', $id)->orderBy('order')->get();
     $quizzes = Quiz::where('id_lesson', '=', $id)->get();
     return Inertia::render('Manage/Lesson/Detail', [
       'lesson' => $lesson,

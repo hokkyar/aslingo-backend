@@ -46,10 +46,11 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
 
   // MATERIAL
   Route::get('/dashboard/manage/lesson/{id}/material/add', [MaterialController::class, 'create'])->name('manage.lesson.material.create');
+  Route::post('/material/edit-order', [MaterialController::class, 'edit_order'])->name('manage.lesson.material.edit_order');
   Route::post('/dashboard/manage/lesson/{id}/material/add', [MaterialController::class, 'store'])->name('manage.lesson.material.store');
   Route::get('/dashboard/manage/lesson/{id}/material/edit/{material_id}', [MaterialController::class, 'edit'])->name('manage.lesson.material.edit');
   Route::post('/dashboard/manage/lesson/{id}/material/edit/{material_id}', [MaterialController::class, 'update'])->name('manage.lesson.material.update');
-  Route::delete('/dashboard/manage/lesson/{id}/material', [MaterialController::class, 'destroy'])->name('manage.lesson.material.destroy');
+  Route::delete('/dashboard/manage/lesson/{id}/material/{material_id}', [MaterialController::class, 'destroy'])->name('manage.lesson.material.destroy');
 
   // QUIZ
   Route::get('/dashboard/manage/lesson/{id}/quiz/add', [QuizController::class, 'create'])->name('manage.lesson.quiz.create');

@@ -2,6 +2,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { Head, Link, router } from '@inertiajs/vue3';
+import Sortable from 'sortablejs';
 
 export default {
   props: { lesson: Object, materials: Array, quizzes: Array },
@@ -15,6 +16,7 @@ export default {
     return {
       selectedMaterial: null,
       selectedQuiz: null,
+      isLoading: false,
     }
   },
   methods: {
@@ -46,7 +48,7 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           router.delete(
-            route('manage.lesson.material.destroy', material.id),
+            route('manage.lesson.material.destroy', [this.lesson.id, material.id]),
             {
               onSuccess: () => {
                 Swal.fire(
@@ -85,9 +87,27 @@ export default {
           )
         }
       })
+    },
+    saveOrder() {
+      this.isLoading = true
+      const items = document.getElementById('sortableList').getElementsByTagName('li')
+      const orderedIds = Array.from(items).map(li => parseInt(li.dataset.id))
+      router.post(route('manage.lesson.material.edit_order'), { orderedIds }, {
+        onSuccess: () => {
+          orderModal.close()
+          this.isLoading = false
+        }
+      })
     }
   },
   mounted() {
+    const sortableList = document.getElementById('sortableList')
+    new Sortable(sortableList, {
+      animation: 150,
+      ghostClass: 'sortable-ghost',
+      onEnd: this.handleSortEnd
+    })
+
     $('#materialTable').DataTable({
       searching: false,
       lengthChange: false,
@@ -121,19 +141,27 @@ export default {
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
           <div class="p-6 text-gray-900">
-            <PrimaryButton class="my-3" :isLink="true" title="Tambah Materi" routeName="manage.lesson.material.create"
-              :idParam="lesson.id" />
+
+            <div class="flex items-center justify-between">
+              <PrimaryButton class="my-3" :isLink="true" title="Tambah Materi" routeName="manage.lesson.material.create"
+                :idParam="lesson.id" />
+              <PrimaryButton class="my-3" :isLink="false" title="Edit Order" onclick="orderModal.showModal()" />
+            </div>
 
             <table id="materialTable" class="display text-center">
               <thead>
                 <tr>
+                  <th class="w-[10px]">No</th>
                   <th>Cover</th>
                   <th>Materi</th>
-                  <th>Action</th>
+                  <th class="min-w-[300px]">Action</th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="material in materials">
+                <tr v-for="(material, index) in materials">
+                  <td>
+                    {{ index + 1 }}
+                  </td>
                   <td>
                     <img class="max-w-52" :src="'/storage/images/' + material.cover" alt="Cover">
                   </td>
@@ -181,6 +209,26 @@ export default {
                 <div class="modal-action">
                   <form method="dialog">
                     <button class="btn" @click="closeMaterialModal">Close</button>
+                  </form>
+                </div>
+              </div>
+            </dialog>
+
+            <!-- ORDER MODAL -->
+            <dialog id="orderModal" class="modal modal-bottom sm:modal-middle">
+              <div class="modal-box">
+                <h3 class="font-bold text-lg">Edit Order</h3>
+                <ul class="cursor-grabbing" id="sortableList" sortable>
+                  <li class="p-3 border m-2" v-for="(material, index) in materials" :key="material.id"
+                    :data-id="material.id">
+                    {{ material.material_name }}
+                  </li>
+                </ul>
+                <div class="modal-action">
+                  <button v-if="isLoading" class="btn btn-primary" disabled>Loading...</button>
+                  <button v-else class="btn btn-primary" @click="saveOrder">Save</button>
+                  <form method="dialog">
+                    <button class="btn">Close</button>
                   </form>
                 </div>
               </div>
