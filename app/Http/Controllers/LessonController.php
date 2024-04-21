@@ -115,7 +115,8 @@ class LessonController extends Controller
         $query->where('class', $class);
       }
     })->where('id_user', $id_user)
-      ->with('lesson')
+      ->join('lessons', 'progress_per_lesson.id_lesson', '=', 'lessons.id')
+      ->orderBy('lessons.order')
       ->get()
       ->map(function ($progress_per_lesson) {
         $lesson = $progress_per_lesson->lesson;

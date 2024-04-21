@@ -170,7 +170,8 @@ class MaterialController extends Controller
   {
     $id_user = auth('api')->user()->id;
     $user_material_check = UserMaterialCheck::where('id_user', $id_user)
-      ->with('material')
+      ->join('materials', 'user_material_checks.id_material', '=', 'materials.id')
+      ->orderBy('materials.order')
       ->get();
 
     $data = $user_material_check->map(function ($item) use ($id_lesson) {
@@ -178,8 +179,9 @@ class MaterialController extends Controller
         return [
           'id' => $item->id_material,
           'material_name' => $item->material->material_name,
-          'cover' => $item->material->cover,
-          'is_done' => $item->is_done
+          'cover' => env('APP_HOST_NAME') . '/storage/images/' . $item->material->cover,
+          'is_done' => $item->is_done,
+          'order' => $item->material->order,
         ];
       }
     })->filter()->values();
@@ -191,7 +193,7 @@ class MaterialController extends Controller
   {
     $id_user = auth('api')->user()->id;
 
-    $material = Material::select('id', 'material_name', 'cover', 'head_pic', 'text_en', 'text_id', 'ilustration', 'video')
+    $material = Material::select('id', 'material_name', 'cover', 'head_pic', 'text_en', 'text_id', 'ilustration', 'text_illustration', 'video', 'order')
       ->find($id_material);
 
     $user_material_check = UserMaterialCheck::where('id_user', $id_user)
@@ -199,10 +201,21 @@ class MaterialController extends Controller
       ->get('is_done')
       ->first();
 
+    $next_material = Material::where('id_lesson', $id_lesson)
+      ->orderBy('order')
+      ->where('order', '>', $material->order)
+      ->get()
+      ->first();
+
     $material->is_done = $user_material_check['is_done'];
+    $material->cover = env('APP_HOST_NAME') . '/storage/images/' . $material->cover;
+    $material->head_pic = $material->head_pic ? env('APP_HOST_NAME') . '/storage/images/' . $material->head_pic : null;
+    $material->ilustration = $material->ilustration ? env('APP_HOST_NAME') . '/storage/images/' . $material->ilustration : null;
+    $material->video = $material->video ? env('APP_HOST_NAME') . '/storage/videos/' . $material->video : null;
 
     return response([
-      'data' => $material
+      'data' => $material,
+      'next_id' => $next_material ? $next_material->id : null
     ]);
   }
 
