@@ -23,14 +23,16 @@ export default {
         material_name: this.material.material_name,
         text_en: this.material.text_en,
         text_id: this.material.text_id,
+        text_illustration: this.material.text_illustration,
         cover: null,
         head_pic: null,
         ilustration: null,
-        video: this.material.video || '',
+        video_illustration: this.material.video,
       }),
       coverImg: '/storage/images/' + this.material.cover,
       headPic: '/storage/images/' + this.material.head_pic,
       ilustration: '/storage/images/' + this.material.ilustration,
+      videoIllustration: '/storage/videos/' + this.material.video,
     }
   },
   methods: {
@@ -51,6 +53,11 @@ export default {
       const selectedFile = event.target.files[0]
       this.ilustration = URL.createObjectURL(selectedFile)
       this.form.ilustration = selectedFile
+    },
+    handleVideo(event) {
+      const selectedFile = event.target.files[0]
+      this.videoIllustration = URL.createObjectURL(selectedFile)
+      this.form.video_illustration = selectedFile
     },
   },
 }
@@ -94,6 +101,13 @@ export default {
                 <InputError class="mt-2" />
               </div>
 
+              <div class="my-3">
+                <InputLabel for="text_illustration" value="Text Illustration" />
+                <TextInput v-model="form.text_illustration" id="text_illustration" type="text" class="mt-1 block w-full"
+                  required />
+                <InputError class="mt-2" />
+              </div>
+
               <img :src="coverImg" alt="Cover">
               <div class="flex flex-col my-3">
                 <InputLabel for="cover" value="Cover" />
@@ -115,10 +129,16 @@ export default {
                   class="file-input file-input-bordered w-full" accept="image/*" />
               </div>
 
-              <div class="my-3">
-                <InputLabel for="video" value="Illustration Video URL" />
-                <TextInput v-model="form.video" id="video" type="text" class="mt-1 block w-full" />
-                <InputError class="mt-2" />
+              <p>Current Video: </p>
+              <video v-if="form.video_illustration" controls>
+                <source :src="videoIllustration" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              <p v-else>Belum ada video</p>
+              <div class="flex flex-col my-3">
+                <InputLabel for="video_illustration" value="Illustration Video" />
+                <input @change="handleVideo" id="video_illustration" type="file"
+                  class="file-input file-input-bordered w-full" accept="video/*" />
               </div>
 
               <PrimaryButton class="mt-4" title="Save" :isLink="false" :disabled="form.processing" />

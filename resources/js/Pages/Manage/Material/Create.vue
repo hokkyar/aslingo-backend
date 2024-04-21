@@ -23,10 +23,11 @@ export default {
         material_name: '',
         text_en: '',
         text_id: '',
+        text_illustration: '',
         cover: null,
         head_pic: null,
         ilustration: null,
-        video: '',
+        video_illustration: null,
       }),
     }
   },
@@ -74,6 +75,12 @@ export default {
                 <TextInput v-model="form.text_id" id="text_id" type="text" class="mt-1 block w-full" required />
                 <InputError class="mt-2" />
               </div>
+              <div class="my-3">
+                <InputLabel for="text_illustration" value="Text Illustration" />
+                <TextInput v-model="form.text_illustration" id="text_illustration" type="text" class="mt-1 block w-full"
+                  required />
+                <InputError class="mt-2" />
+              </div>
 
               <div class="flex flex-col my-3">
                 <InputLabel for="cover" value="Cover" />
@@ -94,9 +101,9 @@ export default {
               </div>
 
               <div class="my-3">
-                <InputLabel for="video" value="Illustration Video URL" />
-                <TextInput v-model="form.video" id="video" type="text" class="mt-1 block w-full" />
-                <InputError class="mt-2" />
+                <InputLabel for="video_illustration" value="Illustration Video" />
+                <input @input="form.video_illustration = $event.target.files[0]" id="video_illustration" type="file"
+                  class="file-input file-input-bordered w-full" accept="video/*" />
               </div>
 
               <PrimaryButton class="mt-4" title="Save" :isLink="false" :disabled="form.processing" />

@@ -194,6 +194,7 @@ export default {
                   <p class="my-2">MATERIAL NAME : {{ selectedMaterial.material_name }}</p>
                   <p class="my-2">TEXT ENGLISH : {{ selectedMaterial.text_en }}</p>
                   <p class="my-2">TEXT INDONESIA : {{ selectedMaterial.text_id }}</p>
+                  <p class="my-2">TEXT ILLUSTRATION : {{ selectedMaterial.text_illustration }}</p>
                   <p class="my-2">
                     IMAGE ILLUSTRATION : <img class="max-w-52" v-if="selectedMaterial.ilustration"
                       :src="'/storage/images/' + selectedMaterial.ilustration" alt="Image Illustration" />
@@ -201,9 +202,13 @@ export default {
                   </p>
                   <p class="my-2">
                     VIDEO ILLUSTRATION :
-                    <iframe v-if="selectedMaterial.video" width="420" height="315"
-                      src="https://www.youtube.com/embed/UUI8d20o9LE" frameborder="0" allowfullscreen></iframe>
-                    <span v-else>Tidak Ada</span>
+                  <div v-if="selectedMaterial.video">
+                    <video controls>
+                      <source :src="'/storage/videos/' + selectedMaterial.video" type="video/mp4">
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                  <span v-else>Tidak Ada</span>
                   </p>
                 </div>
                 <div class="modal-action">

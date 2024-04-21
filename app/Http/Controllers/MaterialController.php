@@ -6,7 +6,6 @@ use App\Models\Lesson;
 use App\Models\Material;
 use App\Models\ProgressPerClass;
 use App\Models\ProgressPerLesson;
-use App\Models\Quiz;
 use App\Models\UserMaterialCheck;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -25,9 +24,10 @@ class MaterialController extends Controller
   {
     $request->validate([
       'material_name' => 'required',
-      'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-      'head_pic' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-      'ilustration' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+      'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10048',
+      'head_pic' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10048',
+      'ilustration' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10048',
+      'video_illustration' => 'nullable|file|mimes:mp4,avi,mov,wmv|max:10048',
       'text_en' => 'required',
       'text_id' => 'required',
     ]);
@@ -35,6 +35,7 @@ class MaterialController extends Controller
     $cover = 'default.png';
     $head_pic = 'default.png';
     $ilustration = 'default.png';
+    $video = null;
 
     if ($request->cover) {
       $cover = time() . '_' . uniqid() . '.' . $request->cover->extension();
@@ -47,6 +48,10 @@ class MaterialController extends Controller
     if ($request->ilustration) {
       $ilustration = time() . '_' . uniqid() . '.' . $request->ilustration->extension();
       $request->ilustration->storeAs('public/images', $ilustration);
+    }
+    if ($request->video_illustration) {
+      $video = time() . '_' . uniqid() . '.' . $request->video_illustration->extension();
+      $request->video_illustration->storeAs('public/videos', $video);
     }
 
     $last_item = Material::where('id_lesson', $id)
@@ -61,7 +66,8 @@ class MaterialController extends Controller
       'cover' => $cover,
       'head_pic' => $head_pic,
       'ilustration' => $ilustration,
-      'video' => $request->video,
+      'text_illustration' => $request->text_illustration,
+      'video' => $video,
       'order' => $last_item->order + 1,
     ]);
 
@@ -78,9 +84,10 @@ class MaterialController extends Controller
   {
     $request->validate([
       'material_name' => 'required',
-      'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-      'head_pic' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-      'ilustration' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+      'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10048',
+      'head_pic' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10048',
+      'ilustration' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10048',
+      'video_illustration' => 'nullable|file|mimes:mp4,avi,mov,wmv|max:10048',
       'text_en' => 'required',
       'text_id' => 'required',
     ]);
@@ -89,7 +96,7 @@ class MaterialController extends Controller
     $material->material_name = $request->material_name;
     $material->text_en = $request->text_en;
     $material->text_id = $request->text_id;
-    $material->video = $request->video;
+    $material->text_illustration = $request->text_illustration;
 
     if ($request->cover) {
       if ($material->cover !== 'default.png') {
@@ -115,6 +122,14 @@ class MaterialController extends Controller
       $request->ilustration->storeAs('public/images', $ilustration);
       $material->ilustration = $ilustration;
     }
+    if ($request->video_illustration) {
+      if ($material->video) {
+        Storage::delete('public/videos/' . $material->video);
+      }
+      $video = time() . '_' . uniqid() . '.' . $request->video_illustration->extension();
+      $request->video_illustration->storeAs('public/videos', $video);
+      $material->video = $video;
+    }
 
     $material->save();
     return to_route('manage.lesson.detail', $id);
@@ -135,6 +150,9 @@ class MaterialController extends Controller
     }
     if ($material->ilustration !== 'default.png') {
       Storage::delete('public/images/' . $material->ilustration);
+    }
+    if ($material->video) {
+      Storage::delete('public/videos/' . $material->video);
     }
     $material->delete();
   }
