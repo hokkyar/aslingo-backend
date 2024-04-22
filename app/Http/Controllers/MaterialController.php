@@ -221,6 +221,12 @@ class MaterialController extends Controller
 
   public function check_material(string $id_lesson, string $id_material)
   {
+    if (Material::find($id_material)->lesson->id != $id_lesson) {
+      return response([
+        'error' => 'wrong_lesson',
+        'message' => 'Lesson does not have this material'
+      ], 400);
+    }
     DB::beginTransaction();
     try {
       $id_user = auth('api')->user()->id;

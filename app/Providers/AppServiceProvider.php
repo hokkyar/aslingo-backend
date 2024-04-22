@@ -30,6 +30,5 @@ class AppServiceProvider extends ServiceProvider
     User::observe(UserObserver::class);
     Lesson::observe(LessonObserver::class);
     Material::observe(MaterialObserver::class);
-    // UserMaterialCheck::observe(UserMaterialCheckObserver::class);
   }
 }
