@@ -104,7 +104,7 @@ export default {
               <div class="my-3">
                 <InputLabel for="text_illustration" value="Text Illustration" />
                 <TextInput v-model="form.text_illustration" id="text_illustration" type="text" class="mt-1 block w-full"
-                  required />
+                   />
                 <InputError class="mt-2" />
               </div>
 

@@ -208,7 +208,7 @@ class MaterialController extends Controller
       ->first();
 
     $material->is_done = $user_material_check['is_done'];
-    $material->cover = env('APP_HOST_NAME') . '/storage/images/' . $material->cover;
+    $material->cover = $material->cover ? env('APP_HOST_NAME') . '/storage/images/' . $material->cover : null;
     $material->head_pic = $material->head_pic ? env('APP_HOST_NAME') . '/storage/images/' . $material->head_pic : null;
     $material->ilustration = $material->ilustration ? env('APP_HOST_NAME') . '/storage/images/' . $material->ilustration : null;
     $material->video = $material->video ? env('APP_HOST_NAME') . '/storage/videos/' . $material->video : null;
