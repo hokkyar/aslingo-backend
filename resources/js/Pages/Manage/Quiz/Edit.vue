@@ -27,10 +27,10 @@ export default {
         col_3: this.quiz.col_3,
         col_4: this.quiz.col_4,
         cover: null,
-        asset_url: null,
+        asset_url: this.quiz.asset_url,
       }),
       coverImg: '/storage/images/' + this.quiz.cover,
-      otherImg: '/storage/images/' + this.quiz.asset_url,
+      otherAsset: '/storage/videos/' + this.quiz.asset_url,
     }
   },
   methods: {
@@ -42,9 +42,9 @@ export default {
       this.coverImg = URL.createObjectURL(selectedFile)
       this.form.cover = selectedFile
     },
-    handleOtherImg(event) {
+    handleOtherAsset(event) {
       const selectedFile = event.target.files[0]
-      this.otherImg = URL.createObjectURL(selectedFile)
+      this.otherAsset = URL.createObjectURL(selectedFile)
       this.form.asset_url = selectedFile
     }
   },
@@ -110,11 +110,16 @@ export default {
                   accept="image/*" />
               </div>
 
-              <img :src="otherImg" alt="Other Image">
+              <p>Current Video/GIF: </p>
+              <video v-if="form.asset_url" controls>
+                <source :src="otherAsset" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              <p v-else>Belum ada video/gif</p>
               <div class="flex flex-col my-3">
                 <InputLabel for="asset_url" value="Other" />
-                <input @change="handleOtherImg" id="asset_url" type="file"
-                  class="file-input file-input-bordered w-full" />
+                <input @change="handleOtherAsset" id="asset_url" type="file"
+                  class="file-input file-input-bordered w-full" accept="video/*" />
               </div>
 
               <PrimaryButton class="mt-4" title="Save" :isLink="false" :disabled="form.processing" />

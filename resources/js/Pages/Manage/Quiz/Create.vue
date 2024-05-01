@@ -98,9 +98,9 @@ export default {
               </div>
 
               <div class="flex flex-col my-3">
-                <InputLabel for="asset_url" value="Other" />
+                <InputLabel for="asset_url" value="Other (It can be video or gif)" />
                 <input @input="form.asset_url = $event.target.files[0]" id="asset_url" type="file"
-                  class="file-input file-input-bordered w-full" />
+                  class="file-input file-input-bordered w-full" accept="video/*" />
               </div>
 
               <PrimaryButton class="mt-4" title="Save" :isLink="false" :disabled="form.processing" />

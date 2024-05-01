@@ -276,11 +276,18 @@ export default {
                       :src="'/storage/images/' + selectedQuiz.cover" alt="Cover">
                     <span v-else>Tidak Ada</span>
                   </p>
+
                   <p class="my-3">
-                    OTHER IMAGE : <img v-if="selectedQuiz.asset_url" class="max-w-52"
-                      :src="'/storage/images/' + selectedQuiz.asset_url" alt="Cover">
-                    <span v-else>Tidak Ada</span>
+                    OTHER :
+                  <div v-if="selectedQuiz.asset_url">
+                    <video controls>
+                      <source :src="'/storage/videos/' + selectedQuiz.asset_url" type="video/mp4">
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                  <span v-else>Tidak Ada</span>
                   </p>
+
                   <p>CONTENT : {{ selectedQuiz.content }}</p>
                   <p>
                     CHOICE A :

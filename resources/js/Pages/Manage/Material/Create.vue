@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     handleSubmit() {
-      this.form.post(route('manage.lesson.material.store', this.lesson.id), this.form)
+      this.form.post(route('manage.lesson.material.store', this.lesson.id))
     }
   },
 }

@@ -24,12 +24,13 @@ class QuizController extends Controller
   {
     $request->validate([
       'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-      'asset_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+      'asset_url' => 'nullable|file|mimes:mp4,avi,mov,wmv|max:10048',
       'content' => 'required',
       'correct_answer' => 'required',
     ]);
 
     $cover = 'default.png';
+
     if ($request->cover) {
       $cover = time() . '_' . uniqid() . '.' . $request->cover->extension();
       $request->cover->storeAs('public/images', $cover);
@@ -37,8 +38,8 @@ class QuizController extends Controller
 
     $asset_url = null;
     if ($request->asset_url) {
-      $asset_url = time() . '_' . uniqid() . '.' . $request->cover->extension();
-      $request->asset_url->storeAs('public/images', $asset_url);
+      $asset_url = time() . '_' . uniqid() . '.' . $request->asset_url->extension();
+      $request->asset_url->storeAs('public/videos', $asset_url);
     }
 
     Quiz::create([
@@ -65,7 +66,7 @@ class QuizController extends Controller
   {
     $request->validate([
       'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-      'asset_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+      'asset_url' => 'nullable|file|mimes:mp4,avi,mov,wmv|max:10048',
       'content' => 'required',
       'correct_answer' => 'required',
     ]);
@@ -82,11 +83,11 @@ class QuizController extends Controller
     }
 
     if ($request->asset_url) {
-      if ($quiz->asset_url !== 'default.png') {
-        Storage::delete('public/images/' . $quiz->asset_url);
+      if ($quiz->video) {
+        Storage::delete('public/videos/' . $quiz->video);
       }
-      $asset_url = time() . '_' . uniqid() . '.' . $request->cover->extension();
-      $request->asset_url->storeAs('public/images', $asset_url);
+      $asset_url = time() . '_' . uniqid() . '.' . $request->asset_url->extension();
+      $request->asset_url->storeAs('public/videos', $asset_url);
       $quiz->asset_url = $asset_url;
     }
 
@@ -107,7 +108,7 @@ class QuizController extends Controller
       Storage::delete('public/images/' . $quiz->cover);
     }
     if ($quiz->asset_url) {
-      Storage::delete('public/images/' . $quiz->asset_url);
+      Storage::delete('public/videos/' . $quiz->asset_url);
     }
     $quiz->delete();
   }
