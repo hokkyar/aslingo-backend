@@ -127,8 +127,8 @@ class QuizController extends Controller
       $user_answer = $user_answers->where('id_quiz', $quiz->id)->first();
       return [
         'id' => $quiz->id,
-        'cover' => $quiz->cover,
-        'asset_url' => $quiz->asset_url,
+        'cover' => $quiz->cover ? env('APP_HOST_NAME') . '/storage/images/' . $quiz->cover : null,
+        'asset_url' => $quiz->asset_url ? env('APP_HOST_NAME') . '/storage/videos/' . $quiz->asset_url : null,
         'content' => $quiz->content,
         'correct_answer' => $quiz->correct_answer,
         'col_1' => $quiz->col_1,
