@@ -48,11 +48,13 @@ class LessonController extends Controller
       ->orderBy('order', 'desc')
       ->first();
 
+    $next_order = $last_item ? $last_item->order + 1 : 1;
+    
     Lesson::create([
       'lesson_name' => $request->lesson_name,
       'cover' => $file_name,
       'class' => $request->class,
-      'order' => $last_item->order + 1
+      'order' => $next_order
     ]);
   }
 

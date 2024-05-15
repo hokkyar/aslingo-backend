@@ -58,6 +58,8 @@ class MaterialController extends Controller
       ->orderBy('order', 'desc')
       ->first();
 
+    $next_order = $last_item ? $last_item->order + 1 : 1;
+
     Material::create([
       'id_lesson' => $id,
       'material_name' => $request->material_name,
@@ -68,7 +70,7 @@ class MaterialController extends Controller
       'ilustration' => $ilustration,
       'text_illustration' => $request->text_illustration,
       'video' => $video,
-      'order' => $last_item->order + 1,
+      'order' => $next_order
     ]);
 
     return to_route('manage.lesson.detail', $id);
