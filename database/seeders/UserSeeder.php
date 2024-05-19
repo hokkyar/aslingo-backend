@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
     for ($class = 7; $class <= 9; $class++) {
       DB::table('progress_per_class')->insert([
         'id_user' => 2,
-        'class' => $class,
+        'class' => (string)$class,
       ]);
     }
     // USER 1 PROGRESS PER LESSON
@@ -59,7 +59,7 @@ class UserSeeder extends Seeder
     for ($class = 7; $class <= 9; $class++) {
       DB::table('progress_per_class')->insert([
         'id_user' => 3,
-        'class' => $class,
+        'class' => (string)$class,
       ]);
     }
     // USER 2 PROGRESS PER LESSON
