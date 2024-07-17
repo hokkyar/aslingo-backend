@@ -13,82 +13,74 @@ class LessonSeeder extends Seeder
    */
   public function run(): void
   {
+    //kelas 7
+    // Class 7
     DB::table('lessons')->insert([
-      'class' => '7',
-      'cover' => 'default.png',
-      'lesson_name' => 'Angka',
+        'order' => '1',
+        'class' => '7',
+        'cover' => 'cover_greetings.jpg',
+        'lesson_name' => 'Greetings',
     ]);
-
     DB::table('lessons')->insert([
-      'class' => '7',
-      'cover' => 'default.png',
-      'lesson_name' => 'Hewan',
+        'order' => '2',
+        'class' => '7',
+        'cover' => 'cover_number.jpg',
+        'lesson_name' => 'Numbers',
     ]);
-
     DB::table('lessons')->insert([
-      'class' => '7',
-      'cover' => 'default.png',
-      'lesson_name' => 'Warna',
+        'order' => '3',
+        'class' => '7',
+        'cover' => 'cover_alfabet.jpg',
+        'lesson_name' => 'Alphabet',
     ]);
-
     DB::table('lessons')->insert([
-      'class' => '7',
-      'cover' => 'default.png',
-      'lesson_name' => 'Keluarga',
+        'order' => '4',
+        'class' => '7',
+        'cover' => 'cover_time.jpg',
+        'lesson_name' => 'Time',
     ]);
-
     DB::table('lessons')->insert([
-      'class' => '8',
-      'cover' => 'default.png',
-      'lesson_name' => 'Buah-buahan',
+        'order' => '5',
+        'class' => '7',
+        'cover' => 'cover_day_of_week.jpg',
+        'lesson_name' => 'Day of the Week',
     ]);
-
     DB::table('lessons')->insert([
-      'class' => '8',
-      'cover' => 'default.png',
-      'lesson_name' => 'Bagian Tubuh',
+        'order' => '6',
+        'class' => '7',
+        'cover' => 'cover_part_of_body.jpg',
+        'lesson_name' => 'Part of the Body',
     ]);
-
     DB::table('lessons')->insert([
-      'class' => '8',
-      'cover' => 'default.png',
-      'lesson_name' => 'Bangunan Sekolah',
+        'order' => '7',
+        'class' => '7',
+        'cover' => 'cover_school_supplies.jpg',
+        'lesson_name' => 'School Supplies',
     ]);
-
     DB::table('lessons')->insert([
-      'class' => '8',
-      'cover' => 'default.png',
-      'lesson_name' => 'Benda dalam Kelas',
+        'order' => '8',
+        'class' => '7',
+        'cover' => 'cover_family.jpg',
+        'lesson_name' => 'Family',
     ]);
-
     DB::table('lessons')->insert([
-      'class' => '9',
-      'cover' => 'default.png',
-      'lesson_name' => 'Benda dalam Rumah',
+        'order' => '9',
+        'class' => '7',
+        'cover' => 'cover_in_bedroom.jpg',
+        'lesson_name' => 'In the Bedroom',
     ]);
-
     DB::table('lessons')->insert([
-      'class' => '9',
-      'cover' => 'default.png',
-      'lesson_name' => 'Di Dapur',
+        'order' => '10',
+        'class' => '7',
+        'cover' => 'cover_in_bathroom.jpg',
+        'lesson_name' => 'In the Bathroom',
     ]);
-
     DB::table('lessons')->insert([
-      'class' => '9',
-      'cover' => 'default.png',
-      'lesson_name' => 'Makanan dan Minuman',
+        'order' => '11',
+        'class' => '7',
+        'cover' => 'cover_in_kitchen.jpg',
+        'lesson_name' => 'In the Kitchen',
     ]);
-
-    DB::table('lessons')->insert([
-      'class' => '9',
-      'cover' => 'default.png',
-      'lesson_name' => 'Seragam Sekolah',
-    ]);
-
-    DB::table('lessons')->insert([
-      'class' => '7',
-      'cover' => 'default.png',
-      'lesson_name' => 'Alpabet',
-    ]);
+    
   }
 }

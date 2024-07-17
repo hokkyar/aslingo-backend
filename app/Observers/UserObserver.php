@@ -25,7 +25,7 @@ class UserObserver
       for ($class = 7; $class <= 9; $class++) {
         ProgressPerClass::create([
           'id_user' => $user->id,
-          'class' => $class,
+          'class' => (string)$class,
         ]);
       }
 
