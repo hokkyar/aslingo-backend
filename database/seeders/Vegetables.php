@@ -31,7 +31,7 @@ class Vegetables extends Seeder
         $order = 1;
         foreach ($data as $key => $texts) {
             DB::table('materials')->insert([
-                'id_lesson' => 6,
+                'id_lesson' => 17,
                 'order' => $order,
                 'cover' => $key . '.png',
                 'head_pic' => $key . '.png',

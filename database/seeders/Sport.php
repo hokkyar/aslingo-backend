@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Seeder;
 
-class Fruits extends Seeder
+class Sport extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,23 +14,24 @@ class Fruits extends Seeder
     public function run(): void
     {
         //
-        $data = [
-            'fruits' => ['Fruits', 'Buah-buahan'],
-            'grape' => ['Grape', 'Anggur'],
-            'mango' => ['Mango', 'Mangga'],
-            'apple' => ['Apple', 'Apel'],
-            'banana' => ['Banana', 'Pisang'],
-            'pineapple' => ['Pineapple', 'Nanas'],
-            'watermelon' => ['Watermelon', 'Semangka'],
-            'strawberry' => ['Strawberry', 'Stroberi'],
-            'orange' => ['Orange', 'Jeruk'],
-            'lemon' => ['Lemon', 'Lemon'],
+         $data = [
+            'basketball' => ['Basketball', 'Bola Basket'],
+            'football' => ['Football', 'Sepak Bola'],
+            'run' => ['Run', 'Lari'],
+            'volleyball' => ['Volleyball', 'Bola Voli'],
+            'swimming' => ['Swimming', 'Renang'],
+            'tennis' => ['Tennis', 'Tenis'],
+            'karate' => ['Karate', 'Karate'],
+            'jump' => ['Jump', 'Melompat'],
+            'i_play_basketball' => ['I play basketball.', 'Saya bermain bola basket.'],
+            'i_play_tennis' => ['I play tennis.', 'Saya bermain tenis.'],
+            'i_play_volleyball' => ['I play volleyball.', 'Saya bermain bola voli.'],
         ];
 
         $order = 1;
         foreach ($data as $key => $texts) {
             DB::table('materials')->insert([
-                'id_lesson' => 16,
+                'id_lesson' => 30,
                 'order' => $order,
                 'cover' => $key . '.png',
                 'head_pic' => $key . '.png',

@@ -30,7 +30,7 @@ class Clothes extends Seeder
         $order = 1;
         foreach ($data as $key => $texts) {
             DB::table('materials')->insert([
-                'id_lesson' => 4,
+                'id_lesson' => 15,
                 'order' => $order,
                 'cover' => $key . '.png',
                 'head_pic' => $key . '.png',

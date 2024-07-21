@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Seeder;
 
-class Fruits extends Seeder
+class YNQuestion extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,22 +15,21 @@ class Fruits extends Seeder
     {
         //
         $data = [
-            'fruits' => ['Fruits', 'Buah-buahan'],
-            'grape' => ['Grape', 'Anggur'],
-            'mango' => ['Mango', 'Mangga'],
-            'apple' => ['Apple', 'Apel'],
-            'banana' => ['Banana', 'Pisang'],
-            'pineapple' => ['Pineapple', 'Nanas'],
-            'watermelon' => ['Watermelon', 'Semangka'],
-            'strawberry' => ['Strawberry', 'Stroberi'],
-            'orange' => ['Orange', 'Jeruk'],
-            'lemon' => ['Lemon', 'Lemon'],
+            'are_you_hungry' => ['Are you hungry?', 'Apakah kamu lapar?'],
+            'are_you_thirsty' => ['Are you thirsty?', 'Apakah kamu haus?'],
+            'are_you_happy' => ['Are you happy?', 'Apakah kamu bahagia?'],
+            'are_you_sad' => ['Are you sad?', 'Apakah kamu sedih?'],
+            'are_you_angry' => ['Are you angry?', 'Apakah kamu marah?'],
+            'are_you_sick_sleepy' => ['Are you sick? Are you sleepy?', 'Apakah kamu sakit? Apakah kamu mengantuk?'],
+            'are_you_tired' => ['Are you tired?', 'Apakah kamu lelah?'],
+            'are_you_worried' => ['Are you worried?', 'Apakah kamu khawatir?'],
+            'are_you_cold' => ['Are you cold?', 'Apakah kamu kedinginan?'],
         ];
 
         $order = 1;
         foreach ($data as $key => $texts) {
             DB::table('materials')->insert([
-                'id_lesson' => 16,
+                'id_lesson' => 25,
                 'order' => $order,
                 'cover' => $key . '.png',
                 'head_pic' => $key . '.png',

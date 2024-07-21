@@ -6,7 +6,8 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class Fruits extends Seeder
+
+class WildAnimals extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,22 +16,21 @@ class Fruits extends Seeder
     {
         //
         $data = [
-            'fruits' => ['Fruits', 'Buah-buahan'],
-            'grape' => ['Grape', 'Anggur'],
-            'mango' => ['Mango', 'Mangga'],
-            'apple' => ['Apple', 'Apel'],
-            'banana' => ['Banana', 'Pisang'],
-            'pineapple' => ['Pineapple', 'Nanas'],
-            'watermelon' => ['Watermelon', 'Semangka'],
-            'strawberry' => ['Strawberry', 'Stroberi'],
-            'orange' => ['Orange', 'Jeruk'],
-            'lemon' => ['Lemon', 'Lemon'],
+            'crocodile' => ['Crocodile', 'Buaya'],
+            'elephant' => ['Elephant', 'Gajah'],
+            'tiger' => ['Tiger', 'Harimau'],
+            'giraffe' => ['Giraffe', 'Jerapah'],
+            'monkey' => ['Monkey', 'Monyet'],
+            'lion' => ['Lion', 'Singa'],
+            'snake' => ['Snake', 'Ular'],
+            'zebra' => ['Zebra', 'Zebra'],
+            'bear' => ['Bear', 'Beruang'],
         ];
 
         $order = 1;
         foreach ($data as $key => $texts) {
             DB::table('materials')->insert([
-                'id_lesson' => 16,
+                'id_lesson' => 19,
                 'order' => $order,
                 'cover' => $key . '.png',
                 'head_pic' => $key . '.png',

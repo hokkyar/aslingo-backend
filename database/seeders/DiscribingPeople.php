@@ -6,7 +6,8 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class Fruits extends Seeder
+
+class DiscribingPeople extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,22 +16,24 @@ class Fruits extends Seeder
     {
         //
         $data = [
-            'fruits' => ['Fruits', 'Buah-buahan'],
-            'grape' => ['Grape', 'Anggur'],
-            'mango' => ['Mango', 'Mangga'],
-            'apple' => ['Apple', 'Apel'],
-            'banana' => ['Banana', 'Pisang'],
-            'pineapple' => ['Pineapple', 'Nanas'],
-            'watermelon' => ['Watermelon', 'Semangka'],
-            'strawberry' => ['Strawberry', 'Stroberi'],
-            'orange' => ['Orange', 'Jeruk'],
-            'lemon' => ['Lemon', 'Lemon'],
+            'tall' => ['Tall', 'Tinggi'],
+            'short' => ['Short', 'Pendek'],
+            'fat' => ['Fat', 'Gemuk'],
+            'thin' => ['Thin', 'Kurus'],
+            'old' => ['Old', 'Tua'],
+            'young' => ['Young', 'Muda'],
+            'beautiful' => ['Beautiful', 'Cantik'],
+            'handsome' => ['Handsome', 'Tampan'],
+            'strong' => ['Strong', 'Kuat'],
+            'weak' => ['Weak', 'Lemah'],
+            'smart' => ['Smart', 'Pintar'],
+            'funny' => ['Funny', 'Lucu'],
         ];
 
         $order = 1;
         foreach ($data as $key => $texts) {
             DB::table('materials')->insert([
-                'id_lesson' => 16,
+                'id_lesson' => 32,
                 'order' => $order,
                 'cover' => $key . '.png',
                 'head_pic' => $key . '.png',
