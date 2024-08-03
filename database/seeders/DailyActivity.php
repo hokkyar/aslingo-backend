@@ -16,7 +16,7 @@ class DailyActivity extends Seeder
     {
         //
         $data = [
-            'wake_up' => ['Wake up', 'Bangun tidur'],
+            'wake_up' =>  ['Wake up', 'Bangun tidur'],
             'shower' => ['Shower', 'Mandi'],
             'study' => ['Study', 'Belajar'],
             'read' => ['Read', 'Membaca'],
