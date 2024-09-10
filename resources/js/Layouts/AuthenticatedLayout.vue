@@ -31,20 +31,20 @@ const showingNavigationDropdown = ref(false);
                             <div
                                 class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
                             >
-                                <NavLink
+                                <!-- <NavLink
                                     :href="route('dashboard')"
                                     :active="
                                         route().current('dashboard.lesson.*')
                                     "
                                 >
                                     Dashboard
-                                </NavLink>
-                                <NavLink
+                                </NavLink> -->
+                                <!-- <NavLink
                                     :href="route('manage.user.index')"
                                     :active="route().current('manage.user.*')"
                                 >
                                     Manage User
-                                </NavLink>
+                                </NavLink> -->
                                 <NavLink
                                     :href="route('manage.lesson.index')"
                                     :active="route().current('manage.lesson.*')"
@@ -152,7 +152,7 @@ const showingNavigationDropdown = ref(false);
                     class="sm:hidden"
                 >
                     <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink
+                        <!-- <ResponsiveNavLink
                             :href="route('dashboard')"
                             :active="route().current('dashboard')"
                         >
@@ -163,7 +163,7 @@ const showingNavigationDropdown = ref(false);
                             :active="route().current('manage.user.index')"
                         >
                             Manage User
-                        </ResponsiveNavLink>
+                        </ResponsiveNavLink> -->
                         <ResponsiveNavLink
                             :href="route('manage.lesson.index')"
                             :active="route().current('manage.lesson.index')"
