@@ -143,24 +143,29 @@ export default {
     <Head title="Show Lesson" />
 
     <AuthenticatedLayout>
-        <template #header>
+        <!-- <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Show Lesson : {{ lesson.lesson_name }}
             </h2>
-        </template>
+        </template> -->
 
         <div class="pb-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <PrimaryButton
+                    class="my-5"
+                    :isLink="true"
+                    title="Add Materi"
+                    routeName="manage.lesson.material.create"
+                    :idParam="lesson.id"
+                />
                 <div
-                    class="flex px-3 items-center justify-between mt-5 py-3 shadow-lg text-center text-2xl font-bold border-r-2 border-t-2 border-l-2 rounded-t-2xl border-primary1"
+                    class="flex px-3 items-center justify-between py-3 shadow-lg text-center text-2xl font-bold border-r-2 border-t-2 border-l-2 rounded-t-2xl border-primary1"
                 >
-                    <PrimaryButton
-                        class="my-3"
-                        :isLink="true"
-                        title="Tambah Materi"
-                        routeName="manage.lesson.material.create"
-                        :idParam="lesson.id"
-                    />
+                    <h2
+                        class="font-semibold text-xl text-gray-800 leading-tight text-primary1 uppercase"
+                    >
+                        {{ lesson.lesson_name }}
+                    </h2>
                     <PrimaryButton
                         class="my-3"
                         :isLink="false"
@@ -325,7 +330,7 @@ export default {
                     id="orderModal"
                     class="modal modal-bottom sm:modal-middle"
                 >
-                    <div class="modal-box">
+                    <div class="modal-box bg-white">
                         <h3 class="font-bold text-lg">Edit Order</h3>
                         <ul class="cursor-grabbing" id="sortableList" sortable>
                             <li
@@ -337,23 +342,27 @@ export default {
                                 {{ material.material_name }}
                             </li>
                         </ul>
-                        <div class="modal-action">
+                        <div class="modal-action w-60">
                             <button
                                 v-if="isLoading"
-                                class="btn btn-primary"
+                                class="btn bg-primary1 border-none hover:bg-lightblue flex-1 text-lg text-white uppercase"
                                 disabled
                             >
                                 Loading...
                             </button>
                             <button
                                 v-else
-                                class="btn btn-primary"
-                                @click="saveOrder"
+                                class="btn bg-primary1 border-none hover:bg-lightblue flex-1 text-lg text-white uppercase"
+                                @click="saveOrder('sortableList7')"
                             >
                                 Save
                             </button>
                             <form method="dialog">
-                                <button class="btn">Close</button>
+                                <button
+                                    class="btn bg-danger border-none hover:bg-danger2 flex-1 text-lg text-white uppercase"
+                                >
+                                    Close
+                                </button>
                             </form>
                         </div>
                     </div>

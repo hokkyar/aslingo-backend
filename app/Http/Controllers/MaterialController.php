@@ -24,13 +24,13 @@ class MaterialController extends Controller
   {
     $request->validate([
       'material_name' => 'required',
-      'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10048',
-      'head_pic' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10048',
-      'ilustration' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10048',
-      'video_illustration' => 'nullable|file|mimes:mp4,avi,mov,wmv|max:10048',
+      'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // 2MB
+      'head_pic' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // 2MB
+      'ilustration' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // 2MB
+      'video_illustration' => 'nullable|file|mimes:mp4,avi,mov,wmv|max:10048', // tetap 10MB untuk video
       'text_en' => 'required',
       'text_id' => 'required',
-    ]);
+  ]);
 
     $cover = 'default.png';
     $head_pic = 'default.png';
@@ -86,13 +86,13 @@ class MaterialController extends Controller
   {
     $request->validate([
       'material_name' => 'required',
-      'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10048',
-      'head_pic' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10048',
-      'ilustration' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10048',
-      'video_illustration' => 'nullable|file|mimes:mp4,avi,mov,wmv|max:10048',
+      'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // 2MB
+      'head_pic' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // 2MB
+      'ilustration' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // 2MB
+      'video_illustration' => 'nullable|file|mimes:mp4,avi,mov,wmv|max:10048', // tetap 10MB untuk video
       'text_en' => 'required',
       'text_id' => 'required',
-    ]);
+  ]);
 
     $material = Material::find($material_id);
     $material->material_name = $request->material_name;
