@@ -298,23 +298,27 @@ export default {
                                         {{ lesson.lesson_name }}
                                     </li>
                                 </ul>
-                                <div class="modal-action">
+                                <div class="modal-action w-60">
                                     <button
                                         v-if="isLoading"
-                                        class="btn btn-primary"
+                                        class="btn bg-primary1 border-none hover:bg-lightblue flex-1 text-lg text-white uppercase"
                                         disabled
                                     >
                                         Loading...
                                     </button>
                                     <button
                                         v-else
-                                        class="btn bg-midnight"
+                                        class="btn bg-primary1 border-none hover:bg-lightblue flex-1 text-lg text-white uppercase"
                                         @click="saveOrder('sortableList7')"
                                     >
                                         Save
                                     </button>
                                     <form method="dialog">
-                                        <button class="btn">Close</button>
+                                        <button
+                                            class="btn bg-danger border-none hover:bg-danger2 flex-1 text-lg text-white uppercase"
+                                        >
+                                            Close
+                                        </button>
                                     </form>
                                 </div>
                             </div>
@@ -412,23 +416,27 @@ export default {
                                         {{ lesson.lesson_name }}
                                     </li>
                                 </ul>
-                                <div class="modal-action">
+                                <div class="modal-action w-60">
                                     <button
                                         v-if="isLoading"
-                                        class="btn btn-primary"
+                                        class="btn bg-primary1 border-none hover:bg-lightblue flex-1 text-lg text-white uppercase"
                                         disabled
                                     >
                                         Loading...
                                     </button>
                                     <button
                                         v-else
-                                        class="btn btn-primary"
-                                        @click="saveOrder('sortableList8')"
+                                        class="btn bg-primary1 border-none hover:bg-lightblue flex-1 text-lg text-white uppercase"
+                                        @click="saveOrder('sortableList7')"
                                     >
                                         Save
                                     </button>
                                     <form method="dialog">
-                                        <button class="btn">Close</button>
+                                        <button
+                                            class="btn bg-danger border-none hover:bg-danger2 flex-1 text-lg text-white uppercase"
+                                        >
+                                            Close
+                                        </button>
                                     </form>
                                 </div>
                             </div>
@@ -526,23 +534,27 @@ export default {
                                         {{ lesson.lesson_name }}
                                     </li>
                                 </ul>
-                                <div class="modal-action">
+                                <div class="modal-action w-60">
                                     <button
                                         v-if="isLoading"
-                                        class="btn btn-primary"
+                                        class="btn bg-primary1 border-none hover:bg-lightblue flex-1 text-lg text-white uppercase"
                                         disabled
                                     >
                                         Loading...
                                     </button>
                                     <button
                                         v-else
-                                        class="btn btn-primary"
-                                        @click="saveOrder('sortableList9')"
+                                        class="btn bg-primary1 border-none hover:bg-lightblue flex-1 text-lg text-white uppercase"
+                                        @click="saveOrder('sortableList7')"
                                     >
                                         Save
                                     </button>
                                     <form method="dialog">
-                                        <button class="btn">Close</button>
+                                        <button
+                                            class="btn bg-danger border-none hover:bg-danger2 flex-1 text-lg text-white uppercase"
+                                        >
+                                            Close
+                                        </button>
                                     </form>
                                 </div>
                             </div>
