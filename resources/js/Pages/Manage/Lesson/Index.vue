@@ -322,20 +322,21 @@ export default {
 
                         <!-- KELAS 8 -->
                         <div
-                            class="flex items-center justify-between my-5 py-3 shadow-lg text-center text-2xl font-bold"
+                            class="flex px-3 items-center justify-between mt-5 py-3 shadow-lg text-center text-2xl font-bold border-r-2 border-t-2 border-l-2 rounded-t-2xl border-primary1"
                         >
-                            <h2 class="mx-3">KELAS 8</h2>
+                            <h2 class="text-primary1">Class VIII</h2>
                             <button
-                                onclick="orderClass8.showModal()"
-                                class="btn btn-primary mx-3"
+                                onclick="orderClass7.showModal()"
+                                class="btn bg-primary1 border-none text-white hover:bg-lightblue"
                             >
                                 Edit Order
                             </button>
                         </div>
                         <div
-                            class="flex justify-center mx-[3.3rem] lg:justify-start flex-wrap gap-3"
+                            class="border-2 rounded-b-2xl border-primary1 p-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
                         >
                             <div
+                                class="border rounded-xl bg-primary1 justify-center flex flex-col items-center py-2"
                                 v-for="lesson in lessons.filter(
                                     (item) => item.class === '8'
                                 )"
@@ -347,26 +348,25 @@ export default {
                                         route('manage.lesson.detail', lesson.id)
                                     "
                                 >
-                                    <div
-                                        class="card rounded-b-none w-[16rem] bg-base-100 shadow-xl"
+                                    <figure>
+                                        <img
+                                            class="h-48"
+                                            :src="
+                                                '/storage/images/' +
+                                                lesson.cover
+                                            "
+                                            alt="Lesson"
+                                        />
+                                    </figure>
+                                    <h2
+                                        class="text-center p-3 font-bold text-xl text-white uppercase"
                                     >
-                                        <figure>
-                                            <img
-                                                class="h-48"
-                                                :src="
-                                                    '/storage/images/' +
-                                                    lesson.cover
-                                                "
-                                                alt="Lesson"
-                                            />
-                                        </figure>
-                                        <h2 class="text-center p-3 font-bold">
-                                            {{ lesson.lesson_name }}
-                                        </h2>
-                                    </div>
+                                        {{ lesson.lesson_name }}
+                                    </h2>
                                 </Link>
-                                <div class="flex flex-col">
-                                    <div>1</div>
+                                <div
+                                    class="flex flex-row card w-full px-2 gap-2"
+                                >
                                     <Link
                                         :href="
                                             route(
@@ -375,12 +375,12 @@ export default {
                                             )
                                         "
                                         as="button"
-                                        class="btn btn-warning flex-1"
+                                        class="btn bg-yellow border-none text-white hover:bg-yellow2 flex-1 text-lg"
                                     >
                                         Edit
                                     </Link>
                                     <button
-                                        class="btn btn-error flex-1"
+                                        class="btn bg-danger border-none text-white hover:bg-danger2 flex-1 text-lg"
                                         @click="confirmDelete(lesson)"
                                     >
                                         Delete
@@ -388,6 +388,7 @@ export default {
                                 </div>
                             </div>
                         </div>
+
                         <!-- Edit Order KELAS 8 Modal -->
                         <dialog
                             id="orderClass8"
@@ -435,20 +436,21 @@ export default {
 
                         <!-- KELAS 9 -->
                         <div
-                            class="flex items-center justify-between my-5 py-3 shadow-lg text-center text-2xl font-bold"
+                            class="flex px-3 items-center justify-between mt-5 py-3 shadow-lg text-center text-2xl font-bold border-r-2 border-t-2 border-l-2 rounded-t-2xl border-primary1"
                         >
-                            <h2 class="mx-3">KELAS 9</h2>
+                            <h2 class="text-primary1">Class IX</h2>
                             <button
-                                onclick="orderClass9.showModal()"
-                                class="btn btn-primary mx-3"
+                                onclick="orderClass7.showModal()"
+                                class="btn bg-primary1 border-none text-white hover:bg-lightblue"
                             >
                                 Edit Order
                             </button>
                         </div>
                         <div
-                            class="flex justify-center mx-[3.3rem] lg:justify-start flex-wrap gap-3"
+                            class="border-2 rounded-b-2xl border-primary1 p-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
                         >
                             <div
+                                class="border rounded-xl bg-primary1 justify-center flex flex-col items-center py-2"
                                 v-for="lesson in lessons.filter(
                                     (item) => item.class === '9'
                                 )"
@@ -460,25 +462,25 @@ export default {
                                         route('manage.lesson.detail', lesson.id)
                                     "
                                 >
-                                    <div
-                                        class="card rounded-b-none w-[16rem] bg-base-100 shadow-xl"
+                                    <figure>
+                                        <img
+                                            class="h-48"
+                                            :src="
+                                                '/storage/images/' +
+                                                lesson.cover
+                                            "
+                                            alt="Lesson"
+                                        />
+                                    </figure>
+                                    <h2
+                                        class="text-center p-3 font-bold text-xl text-white uppercase"
                                     >
-                                        <figure>
-                                            <img
-                                                class="h-48"
-                                                :src="
-                                                    '/storage/images/' +
-                                                    lesson.cover
-                                                "
-                                                alt="Lesson"
-                                            />
-                                        </figure>
-                                        <h2 class="text-center p-3 font-bold">
-                                            {{ lesson.lesson_name }}
-                                        </h2>
-                                    </div>
+                                        {{ lesson.lesson_name }}
+                                    </h2>
                                 </Link>
-                                <div class="flex flex-row card w-[16rem]">
+                                <div
+                                    class="flex flex-row card w-full px-2 gap-2"
+                                >
                                     <Link
                                         :href="
                                             route(
@@ -487,12 +489,12 @@ export default {
                                             )
                                         "
                                         as="button"
-                                        class="btn btn-warning rounded-t-none rounded-br-none flex-1"
+                                        class="btn bg-yellow border-none text-white hover:bg-yellow2 flex-1 text-lg"
                                     >
                                         Edit
                                     </Link>
                                     <button
-                                        class="btn btn-error rounded-t-none rounded-bl-none flex-1"
+                                        class="btn bg-danger border-none text-white hover:bg-danger2 flex-1 text-lg"
                                         @click="confirmDelete(lesson)"
                                     >
                                         Delete
@@ -500,6 +502,7 @@ export default {
                                 </div>
                             </div>
                         </div>
+
                         <!-- Edit Order KELAS 9 Modal -->
                         <dialog
                             id="orderClass9"
