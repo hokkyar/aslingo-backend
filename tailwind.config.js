@@ -22,6 +22,15 @@ export default {
             silver: "#ecebff",
             bubblegum: "#ff77e9",
             bermuda: "#78dcca",
+            black: "#31363F",
+            primary: "#008DDA",
+            grey: "#E3DCDC",
+            lightblue: "#50A6D6",
+            lightblue: "#50A6D6",
+            text: "#FFF7FC",
+            green: "#74E291",
+            danger: "#E72929",
+            yellow: "#FFB22C",
         },
         extend: {
             fontFamily: {

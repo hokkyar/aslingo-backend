@@ -12,8 +12,8 @@ const showingNavigationDropdown = ref(false);
 
 <template>
     <div>
-        <div class="min-h-screen bg-gray-100">
-            <nav class="bg-white border-b border-gray-100">
+        <div class="min-h-screen bg-white">
+            <nav class="bg-white shadow-sm">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
@@ -29,17 +29,18 @@ const showingNavigationDropdown = ref(false);
 
                             <!-- Navigation Links -->
                             <div
-                                class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
+                                class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex text-black"
                             >
-                                <!-- <NavLink
+                                <NavLink
                                     :href="route('dashboard')"
                                     :active="
                                         route().current('dashboard.lesson.*')
                                     "
                                 >
                                     Dashboard
-                                </NavLink> -->
+                                </NavLink>
                                 <!-- <NavLink
+                                    class="text-black"
                                     :href="route('manage.user.index')"
                                     :active="route().current('manage.user.*')"
                                 >
@@ -49,12 +50,14 @@ const showingNavigationDropdown = ref(false);
                                     :href="route('manage.lesson.index')"
                                     :active="route().current('manage.lesson.*')"
                                 >
-                                    Manage Lesson
+                                    Manage Lessons
                                 </NavLink>
                             </div>
                         </div>
 
-                        <div class="hidden sm:flex sm:items-center sm:ms-6">
+                        <div
+                            class="hidden sm:flex sm:items-center sm:ms-6 text-black"
+                        >
                             <!-- Settings Dropdown -->
                             <div class="ms-3 relative">
                                 <Dropdown align="right" width="48">
@@ -152,13 +155,13 @@ const showingNavigationDropdown = ref(false);
                     class="sm:hidden"
                 >
                     <div class="pt-2 pb-3 space-y-1">
-                        <!-- <ResponsiveNavLink
+                        <ResponsiveNavLink
                             :href="route('dashboard')"
                             :active="route().current('dashboard')"
                         >
                             Dashboard
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink
+                        <!-- <ResponsiveNavLink
                             :href="route('manage.user.index')"
                             :active="route().current('manage.user.index')"
                         >
