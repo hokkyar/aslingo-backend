@@ -419,7 +419,7 @@ export default {
                             </Link>
                             <button
                                 class="btn bg-danger border-none text-white hover:bg-danger2 flex-1 text-lg"
-                                @click="confirmMaterialDelete(quiz)"
+                                @click="confirmQuizDelete(quiz)"
                             >
                                 Delete
                             </button>
