@@ -69,7 +69,9 @@ class LessonObserver
         // Progress Per Class
         $user_lesson_progress = ProgressPerLesson::whereIn('id_lesson', $lesson_ids)
           ->where('id_user', $user_id)->pluck('progress')->sum();
-        $progress_per_class = ($user_lesson_progress / ($lesson_count * 100)) * 100;
+        $progress_per_class = $lesson_count > 0
+          ? ($user_lesson_progress / ($lesson_count * 100)) * 100
+          : 0;
         ProgressPerClass::where('id_user', $user_id)->where('class', $class)->update([
           'progress' => $progress_per_class
         ]);
