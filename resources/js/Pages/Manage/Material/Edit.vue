@@ -1,18 +1,141 @@
+<script>
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import InputError from "@/Components/InputError.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import TextInput from "@/Components/TextInput.vue";
+import { Head, useForm } from "@inertiajs/vue3";
+
+export default {
+    props: { lesson_id: String, material: Object },
+    components: {
+        AuthenticatedLayout,
+        Head,
+        InputError,
+        InputLabel,
+        PrimaryButton,
+        TextInput,
+    },
+    data() {
+        return {
+            form: useForm({
+                material_name: this.material.material_name,
+                text_en: this.material.text_en,
+                text_id: this.material.text_id,
+                text_illustration: this.material.text_illustration,
+                cover: null,
+                head_pic: null,
+                ilustration: null,
+                video_illustration: null,
+            }),
+            coverImg: "/storage/images/" + this.material.cover,
+            headPic: "/storage/images/" + this.material.head_pic,
+            ilustration: "/storage/images/" + this.material.ilustration,
+            videoIllustration: "/storage/videos/" + this.material.video,
+            showErrors: false,
+        };
+    },
+    watch: {
+        "form.errors"(newVal) {
+            if (Object.keys(newVal).length > 0) {
+                this.showErrors = true;
+                setTimeout(() => {
+                    this.showErrors = false;
+                }, 5000);
+            }
+        },
+    },
+    methods: {
+        handleSubmit() {
+            const formData = new FormData();
+
+            formData.append("material_name", this.form.material_name);
+            formData.append("text_en", this.form.text_en);
+            formData.append("text_id", this.form.text_id);
+            formData.append("text_illustration", this.form.text_illustration);
+
+            if (this.form.cover) {
+                formData.append("cover", this.form.cover);
+            }
+            if (this.form.head_pic) {
+                formData.append("head_pic", this.form.head_pic);
+            }
+            if (this.form.ilustration) {
+                formData.append("ilustration", this.form.ilustration);
+            }
+            if (this.form.video_illustration) {
+                formData.append(
+                    "video_illustration",
+                    this.form.video_illustration
+                );
+            }
+
+            this.form.post(
+                route("manage.lesson.material.update", [
+                    this.lesson_id,
+                    this.material.id,
+                ]),
+                {
+                    preserveScroll: true,
+                    forceFormData: true,
+                    onSuccess: () => {
+                        Swal.fire({
+                            title: "Success!",
+                            text: "Material Updated Successfully!",
+                            icon: "success",
+                        });
+                    },
+                }
+            );
+        },
+        handleCover(event) {
+            const selectedFile = event.target.files[0];
+            this.coverImg = URL.createObjectURL(selectedFile);
+            this.form.cover = selectedFile;
+        },
+        handleHeadPic(event) {
+            const selectedFile = event.target.files[0];
+            this.headPic = URL.createObjectURL(selectedFile);
+            this.form.head_pic = selectedFile;
+        },
+        handleIlustration(event) {
+            const selectedFile = event.target.files[0];
+            this.ilustration = URL.createObjectURL(selectedFile);
+            this.form.ilustration = selectedFile;
+        },
+        handleVideo(event) {
+            const selectedFile = event.target.files[0];
+            this.videoIllustration = URL.createObjectURL(selectedFile);
+            this.form.video_illustration = selectedFile;
+        },
+    },
+};
+</script>
+
 <template>
     <Head title="Edit Material" />
 
     <AuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-2xl text-gray-800 leading-tight">
-                Edit {{ material.material_name }}
-            </h2>
-        </template>
-
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div v-if="form.errors" class="mb-4 text-danger">
-                        {{ form.errors }}
+                    <h1
+                        class="font-extrabold text-2xl text-gray-800 leading-tight mb-4 text-center"
+                    >
+                        Edit Material {{ material.material_name }}
+                    </h1>
+
+                    <div
+                        v-if="showErrors && Object.keys(form.errors).length"
+                        class="mb-4 text-danger"
+                    >
+                        <small
+                            v-for="(error, field) in form.errors"
+                            :key="field"
+                            class="block mb-1"
+                        >
+                            {{ error }}
+                        </small>
                     </div>
 
                     <form @submit.prevent="handleSubmit" class="space-y-6">
@@ -167,106 +290,3 @@
         </div>
     </AuthenticatedLayout>
 </template>
-
-<script>
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import InputError from "@/Components/InputError.vue";
-import InputLabel from "@/Components/InputLabel.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-import TextInput from "@/Components/TextInput.vue";
-import { Head, useForm } from "@inertiajs/vue3";
-
-export default {
-    props: { lesson_id: String, material: Object },
-    components: {
-        AuthenticatedLayout,
-        Head,
-        InputError,
-        InputLabel,
-        PrimaryButton,
-        TextInput,
-    },
-    data() {
-        return {
-            form: useForm({
-                material_name: this.material.material_name,
-                text_en: this.material.text_en,
-                text_id: this.material.text_id,
-                text_illustration: this.material.text_illustration,
-                cover: null,
-                head_pic: null,
-                ilustration: null,
-                video_illustration: null,
-            }),
-            coverImg: "/storage/images/" + this.material.cover,
-            headPic: "/storage/images/" + this.material.head_pic,
-            ilustration: "/storage/images/" + this.material.ilustration,
-            videoIllustration: "/storage/videos/" + this.material.video,
-        };
-    },
-    methods: {
-        handleSubmit() {
-            const formData = new FormData();
-
-            formData.append("material_name", this.form.material_name);
-            formData.append("text_en", this.form.text_en);
-            formData.append("text_id", this.form.text_id);
-            formData.append("text_illustration", this.form.text_illustration);
-
-            if (this.form.cover) {
-                formData.append("cover", this.form.cover);
-            }
-            if (this.form.head_pic) {
-                formData.append("head_pic", this.form.head_pic);
-            }
-            if (this.form.ilustration) {
-                formData.append("ilustration", this.form.ilustration);
-            }
-            if (this.form.video_illustration) {
-                formData.append(
-                    "video_illustration",
-                    this.form.video_illustration
-                );
-            }
-
-            this.form.post(
-                route("manage.lesson.material.update", [
-                    this.lesson_id,
-                    this.material.id,
-                ]),
-                {
-                    preserveScroll: true,
-                    forceFormData: true,
-                    onSuccess: () => {
-                        Swal.fire({
-                            title: "Success!",
-                            text: "Material Updated Successfully!",
-                            icon: "success",
-                        });
-                    },
-                }
-            );
-        },
-        handleCover(event) {
-            const selectedFile = event.target.files[0];
-            this.coverImg = URL.createObjectURL(selectedFile);
-            this.form.cover = selectedFile;
-        },
-        handleHeadPic(event) {
-            const selectedFile = event.target.files[0];
-            this.headPic = URL.createObjectURL(selectedFile);
-            this.form.head_pic = selectedFile;
-        },
-        handleIlustration(event) {
-            const selectedFile = event.target.files[0];
-            this.ilustration = URL.createObjectURL(selectedFile);
-            this.form.ilustration = selectedFile;
-        },
-        handleVideo(event) {
-            const selectedFile = event.target.files[0];
-            this.videoIllustration = URL.createObjectURL(selectedFile);
-            this.form.video_illustration = selectedFile;
-        },
-    },
-};
-</script>

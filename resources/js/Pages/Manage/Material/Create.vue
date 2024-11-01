@@ -1,19 +1,82 @@
+<script>
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import InputError from "@/Components/InputError.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import TextInput from "@/Components/TextInput.vue";
+import { Head, useForm } from "@inertiajs/vue3";
+
+export default {
+    props: {
+        lesson: Object,
+    },
+    components: {
+        AuthenticatedLayout,
+        InputError,
+        InputLabel,
+        PrimaryButton,
+        TextInput,
+        Head,
+    },
+    data() {
+        return {
+            form: useForm({
+                material_name: "",
+                text_en: "",
+                text_id: "",
+                text_illustration: "",
+                cover: null,
+                head_pic: null,
+                ilustration: null,
+                video_illustration: null,
+            }),
+            showErrors: false,
+        };
+    },
+    watch: {
+        "form.errors"(newVal) {
+            if (Object.keys(newVal).length > 0) {
+                this.showErrors = true;
+                setTimeout(() => {
+                    this.showErrors = false;
+                }, 5000);
+            }
+        },
+    },
+    methods: {
+        handleSubmit() {
+            this.form.post(
+                route("manage.lesson.material.store", this.lesson.id)
+            );
+        },
+    },
+};
+</script>
+
 <template>
     <Head title="Create Material" />
 
     <AuthenticatedLayout>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <!-- Header -->
-                <h2
-                    class="font-semibold text-2xl text-gray-800 leading-tight mb-4"
-                >
-                    Create Material For {{ lesson.lesson_name }}
-                </h2>
-
                 <div class="bg-white p-6 shadow-lg rounded-lg">
-                    <div v-if="form.errors" class="mb-4 text-danger">
-                        <small>{{ form.errors }}</small>
+                    <!-- Header -->
+                    <h1
+                        class="font-extrabold text-2xl text-gray-800 leading-tight mb-4 text-center"
+                    >
+                        Create Material For {{ lesson.lesson_name }}
+                    </h1>
+                    <div
+                        v-if="showErrors && Object.keys(form.errors).length"
+                        class="mb-4 text-danger"
+                    >
+                        <small
+                            v-for="(error, field) in form.errors"
+                            :key="field"
+                            class="block mb-1"
+                        >
+                            {{ error }}
+                        </small>
                     </div>
 
                     <!-- Form -->
@@ -189,47 +252,3 @@
         </div>
     </AuthenticatedLayout>
 </template>
-
-<script>
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import InputError from "@/Components/InputError.vue";
-import InputLabel from "@/Components/InputLabel.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-import TextInput from "@/Components/TextInput.vue";
-import { Head, useForm } from "@inertiajs/vue3";
-
-export default {
-    props: {
-        lesson: Object,
-    },
-    components: {
-        AuthenticatedLayout,
-        InputError,
-        InputLabel,
-        PrimaryButton,
-        TextInput,
-        Head,
-    },
-    data() {
-        return {
-            form: useForm({
-                material_name: "",
-                text_en: "",
-                text_id: "",
-                text_illustration: "",
-                cover: null,
-                head_pic: null,
-                ilustration: null,
-                video_illustration: null,
-            }),
-        };
-    },
-    methods: {
-        handleSubmit() {
-            this.form.post(
-                route("manage.lesson.material.store", this.lesson.id)
-            );
-        },
-    },
-};
-</script>

@@ -149,23 +149,24 @@ export default {
             </h2>
         </template> -->
 
+        <!-- LIST MATERIAL -->
         <div class="pb-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <PrimaryButton
-                    class="my-5"
-                    :isLink="true"
-                    title="Add Materi"
-                    routeName="manage.lesson.material.create"
-                    :idParam="lesson.id"
-                />
+                <h2
+                    class="font-semibold text-xl text-center my-5 leading-tight text-primary1 uppercase"
+                >
+                    {{ lesson.lesson_name }}
+                </h2>
                 <div
                     class="flex px-3 items-center justify-between py-3 shadow-lg text-center text-2xl font-bold border-r-2 border-t-2 border-l-2 rounded-t-2xl border-primary1"
                 >
-                    <h2
-                        class="font-semibold text-xl text-gray-800 leading-tight text-primary1 uppercase"
-                    >
-                        {{ lesson.lesson_name }}
-                    </h2>
+                    <PrimaryButton
+                        class="my-3"
+                        :isLink="true"
+                        title="Add Materi"
+                        routeName="manage.lesson.material.create"
+                        :idParam="lesson.id"
+                    />
                     <PrimaryButton
                         class="my-3"
                         :isLink="false"
@@ -185,9 +186,9 @@ export default {
                             @click="showMaterialModal(material)"
                             class="hover:opacity-80 transition duration-300 ease-in-out cursor-pointer"
                         >
-                            <figure>
+                            <figure class="w-48 h-56 overflow-hidden">
                                 <img
-                                    class="h-48 w-full object-cover"
+                                    class="h-full w-full object-cover"
                                     :src="`/storage/images/${material.cover}`"
                                     alt="Cover"
                                 />
@@ -221,6 +222,68 @@ export default {
                     </div>
                 </div>
 
+                <!-- LIST QUIZ -->
+                <div
+                    class="flex px-3 items-center justify-between mt-5 py-3 shadow-lg text-center text-2xl font-bold border-r-2 border-t-2 border-l-2 rounded-t-2xl border-primary1"
+                >
+                    <PrimaryButton
+                        class="my-3"
+                        :isLink="true"
+                        title="Tambah Quiz"
+                        routeName="manage.lesson.quiz.create"
+                        :idParam="lesson.id"
+                    />
+                </div>
+                <div
+                    class="border-2 rounded-b-2xl border-primary1 p-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4"
+                >
+                    <div
+                        class="border rounded-xl bg-primary1 justify-center flex flex-col items-center py-2"
+                        v-for="quiz in quizzes"
+                        :key="index"
+                    >
+                        <div
+                            @click="showQuizModal(quiz)"
+                            class="hover:opacity-80 transition duration-300 ease-in-out cursor-pointer"
+                        >
+                            <figure class="w-48 h-56 border-2 overflow-hidden">
+                                <img
+                                    class="w-full h-full object-cover"
+                                    :src="'/storage/images/' + quiz.cover"
+                                    alt="Cover"
+                                />
+                            </figure>
+
+                            <h2
+                                class="text-center p-3 font-bold text-xl text-white uppercase"
+                            >
+                                {{ quiz.content }}
+                            </h2>
+                        </div>
+                        <div class="flex flex-row w-full px-2 gap-2">
+                            <Link
+                                :href="
+                                    route('manage.lesson.quiz.edit', [
+                                        lesson.id,
+                                        quiz.id,
+                                    ])
+                                "
+                                class="btn bg-yellow border-none text-white hover:bg-yellow2 flex-1 text-lg"
+                                as="button"
+                            >
+                                Edit
+                            </Link>
+                            <button
+                                class="btn bg-danger border-none text-white hover:bg-danger2 flex-1 text-lg"
+                                @click="confirmQuizDelete(quiz)"
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIEW MATERIAL -->
                 <dialog id="materialModal" class="modal">
                     <div class="modal-box max-w-6xl bg-white">
                         <h3 class="font-bold text-lg text-black">
@@ -268,10 +331,10 @@ export default {
                             <div class="w-1/2 p-2">
                                 <div class="flex justify-evenly">
                                     <div
-                                        class="border-2 border-primary1 rounded-lg text-center font-bold text-black"
+                                        class="border-2 border-primary1 rounded-lg text-center font-bold text-black w-48 h-52 overflow-hidden p-2"
                                     >
                                         <img
-                                            class="max-w-52"
+                                            class="w-full h-full object-cover"
                                             v-if="selectedMaterial.cover"
                                             :src="
                                                 '/storage/images/' +
@@ -279,14 +342,13 @@ export default {
                                             "
                                             alt="Cover"
                                         />
-                                        COVER
                                     </div>
 
                                     <div
-                                        class="border-2 border-primary1 rounded-lg text-center font-bold text-black"
+                                        class="border-2 border-primary1 rounded-lg text-center font-bold text-black w-48 h-52 overflow-hidden p-2"
                                     >
                                         <img
-                                            class="max-w-52"
+                                            class="w-full h-full object-cover"
                                             v-if="selectedMaterial.ilustration"
                                             :src="
                                                 '/storage/images/' +
@@ -294,10 +356,11 @@ export default {
                                             "
                                             alt="Image Illustration"
                                         />
-                                        ILLUSTRATION
                                     </div>
                                 </div>
-                                <div class="mt-2">
+                                <div
+                                    class="mt-2 border-2 border-primary1 justify-center items-center text-center"
+                                >
                                     <div v-if="selectedMaterial.video">
                                         <video controls>
                                             <source
@@ -311,7 +374,149 @@ export default {
                                             video tag.
                                         </video>
                                     </div>
+                                    <span v-else>Video tidak tersedia</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-action">
+                            <form method="dialog">
+                                <button class="btn" @click="closeMaterialModal">
+                                    Close
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </dialog>
+
+                <!-- VIEW QUIZ -->
+                <dialog id="quizModal" class="modal">
+                    <div class="modal-box max-w-6xl bg-white">
+                        <h3
+                            class="text-lg font-extrabold px-2 text-black text-center"
+                        >
+                            Quiz Detail
+                        </h3>
+                        <div v-if="selectedQuiz" class="flex">
+                            <div class="p-2 w-1/2">
+                                <!-- <div class="mb-2">
+                                    <p>Answer</p>
+                                    <p
+                                        class="border py-1 px-2 rounded-md border-primary1 font-semibold"
+                                    >
+                                        {{ selectedQuiz.correct_answer }}
+                                    </p>
+                                </div> -->
+                                <div class="mb-2">
+                                    <p>Option A</p>
+                                    <p
+                                        class="border py-1 px-2 rounded-md font-semibold flex items-center justify-between"
+                                    >
+                                        <span>{{ selectedQuiz.col_1 }}</span>
+                                        <span
+                                            v-if="
+                                                selectedQuiz.col_1 ===
+                                                selectedQuiz.correct_answer
+                                            "
+                                            class="ml-2 text-end"
+                                            >✔️</span
+                                        >
+                                        <span v-else class="ml-2">❌</span>
+                                    </p>
+                                </div>
+                                <div class="mb-2">
+                                    <p>Option B</p>
+                                    <p
+                                        class="border py-1 px-2 rounded-md font-semibold flex items-center justify-between"
+                                    >
+                                        <span>{{ selectedQuiz.col_2 }}</span>
+                                        <span
+                                            v-if="
+                                                selectedQuiz.col_2 ===
+                                                selectedQuiz.correct_answer
+                                            "
+                                            class="ml-2"
+                                            >✔️</span
+                                        >
+                                        <span v-else class="ml-2">❌</span>
+                                    </p>
+                                </div>
+                                <div class="mb-2">
+                                    <p>Option C</p>
+                                    <p
+                                        :class="{
+                                            'border-green-500 text-green-700':
+                                                selectedQuiz.col_3 ===
+                                                selectedQuiz.correct_answer,
+                                            'border-red-500 text-red-700':
+                                                selectedQuiz.col_3 !==
+                                                selectedQuiz.correct_answer,
+                                        }"
+                                        class="border py-1 px-2 rounded-md font-semibold flex items-center justify-between"
+                                    >
+                                        <span>{{ selectedQuiz.col_3 }}</span>
+                                        <span
+                                            v-if="
+                                                selectedQuiz.col_3 ===
+                                                selectedQuiz.correct_answer
+                                            "
+                                            class="ml-2"
+                                            >✔️</span
+                                        >
+                                        <span v-else class="ml-2">❌</span>
+                                    </p>
+                                </div>
+                                <div class="mb-2">
+                                    <p>Option D</p>
+                                    <p
+                                        class="border py-1 px-2 rounded-md font-semibold flex items-center justify-between"
+                                    >
+                                        <span>{{ selectedQuiz.col_4 }}</span>
+                                        <span
+                                            v-if="
+                                                selectedQuiz.col_4 ===
+                                                selectedQuiz.correct_answer
+                                            "
+                                            class="ml-2"
+                                            >✔️</span
+                                        >
+                                        <span v-else class="ml-2">❌</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div
+                                class="flex flex-col w-1/2 justify-center items-center"
+                            >
+                                <div
+                                    class="border-2 p-2 border-primary1 rounded-lg text-center font-bold text-black mb-2"
+                                >
+                                    <img
+                                        class="max-h-56"
+                                        v-if="selectedQuiz.cover"
+                                        :src="
+                                            '/storage/images/' +
+                                            selectedQuiz.cover
+                                        "
+                                        alt="Cover"
+                                    />
+                                    COVER
+                                </div>
+
+                                <div class="text-center font-bold text-black">
+                                    <div v-if="selectedQuiz.asset_url">
+                                        <video controls>
+                                            <source
+                                                :src="
+                                                    '/storage/videos/' +
+                                                    selectedQuiz.asset_url
+                                                "
+                                                type="video/mp4"
+                                            />
+                                            Your browser does not support the
+                                            video tag.
+                                        </video>
+                                    </div>
                                     <span v-else>Tidak Ada</span>
+                                    VIDEO
                                 </div>
                             </div>
                         </div>
@@ -361,158 +566,6 @@ export default {
                                 <button
                                     class="btn bg-danger border-none hover:bg-danger2 flex-1 text-lg text-white uppercase"
                                 >
-                                    Close
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </dialog>
-
-                <div
-                    class="flex px-3 items-center justify-between mt-5 py-3 shadow-lg text-center text-2xl font-bold border-r-2 border-t-2 border-l-2 rounded-t-2xl border-primary1"
-                >
-                    <PrimaryButton
-                        class="my-5"
-                        :isLink="true"
-                        title="Tambah Quiz"
-                        routeName="manage.lesson.quiz.create"
-                        :idParam="lesson.id"
-                    />
-                </div>
-                <div
-                    class="border-2 rounded-b-2xl border-primary1 p-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4"
-                >
-                    <div
-                        class="border rounded-xl bg-primary1 justify-center flex flex-col items-center py-2"
-                        v-for="quiz in quizzes"
-                        :key="index"
-                    >
-                        <div
-                            @click="showQuizModal(quiz)"
-                            class="hover:opacity-80 transition duration-300 ease-in-out cursor-pointer"
-                        >
-                            <figure>
-                                <img
-                                    class="max-w-52"
-                                    :src="'/storage/images/' + quiz.cover"
-                                    alt="Cover"
-                                />
-                            </figure>
-                            <h2
-                                class="text-center p-3 font-bold text-xl text-white uppercase"
-                            >
-                                {{ quiz.content }}
-                            </h2>
-                        </div>
-                        <div class="flex flex-row w-full px-2 gap-2">
-                            <Link
-                                :href="
-                                    route('manage.lesson.quiz.edit', [
-                                        lesson.id,
-                                        quiz.id,
-                                    ])
-                                "
-                                class="btn bg-yellow border-none text-white hover:bg-yellow2 flex-1 text-lg"
-                                as="button"
-                            >
-                                Edit
-                            </Link>
-                            <button
-                                class="btn bg-danger border-none text-white hover:bg-danger2 flex-1 text-lg"
-                                @click="confirmQuizDelete(quiz)"
-                            >
-                                Delete
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <dialog id="quizModal" class="modal">
-                    <div class="modal-box max-w-6xl bg-white">
-                        <h3 class="font-bold text-lg px-2">Quiz Detail</h3>
-                        <div v-if="selectedQuiz" class="flex">
-                            <div class="p-2 w-1/2">
-                                <div class="mb-2">
-                                    <p>Answer</p>
-                                    <p
-                                        class="border py-1 px-2 rounded-md border-primary1 font-semibold"
-                                    >
-                                        {{ selectedQuiz.correct_answer }}
-                                    </p>
-                                </div>
-                                <div class="mb-2">
-                                    <p>Choice A</p>
-                                    <p
-                                        class="border py-1 px-2 rounded-md border-primary1 font-semibold"
-                                    >
-                                        {{ selectedQuiz.col_1 }}
-                                    </p>
-                                </div>
-                                <div class="mb-2">
-                                    <p>Choice B</p>
-                                    <p
-                                        class="border py-1 px-2 rounded-md border-primary1 font-semibold"
-                                    >
-                                        {{ selectedQuiz.col_2 }}
-                                    </p>
-                                </div>
-                                <div class="mb-2">
-                                    <p>Choice C</p>
-                                    <p
-                                        class="border py-1 px-2 rounded-md border-primary1 font-semibold"
-                                    >
-                                        {{ selectedQuiz.col_3 }}
-                                    </p>
-                                </div>
-                                <div class="mb-2">
-                                    <p>Choice D</p>
-                                    <p
-                                        class="border py-1 px-2 rounded-md border-primary1 font-semibold"
-                                    >
-                                        {{ selectedQuiz.col_4 }}
-                                    </p>
-                                </div>
-                            </div>
-                            <div
-                                class="flex flex-col w-1/2 justify-center items-center"
-                            >
-                                <div
-                                    class="border-2 p-2 border-primary1 rounded-lg text-center font-bold text-black mb-2"
-                                >
-                                    <img
-                                        class="max-w-48"
-                                        v-if="selectedQuiz.cover"
-                                        :src="
-                                            '/storage/images/' +
-                                            selectedQuiz.cover
-                                        "
-                                        alt="Cover"
-                                    />
-                                    COVER
-                                </div>
-
-                                <div class="text-center font-bold text-black">
-                                    <div v-if="selectedQuiz.asset_url">
-                                        <video controls>
-                                            <source
-                                                :src="
-                                                    '/storage/videos/' +
-                                                    selectedQuiz.asset_url
-                                                "
-                                                type="video/mp4"
-                                            />
-                                            Your browser does not support the
-                                            video tag.
-                                        </video>
-                                    </div>
-                                    <span v-else>Tidak Ada</span>
-                                    VIDEO
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-action">
-                            <form method="dialog">
-                                <button class="btn" @click="closeMaterialModal">
                                     Close
                                 </button>
                             </form>
