@@ -133,7 +133,7 @@ class LessonController extends Controller
                   ->where('id_lesson', $progress_per_lesson->id_lesson)
                   ->exists(); 
 
-              $lesson['score'] = $hasScore;
+              $lesson['isQuizDone'] = $hasScore;
   
               return $lesson;
         });
