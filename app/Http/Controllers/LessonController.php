@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Lesson;
 use App\Models\Material;
 use App\Models\ProgressPerLesson;
+use App\Models\UserQuizScore;
 use App\Models\Quiz;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -109,24 +110,34 @@ class LessonController extends Controller
   // API
   public function get_all_lessons(Request $request)
   {
-    $class = $request->query('class') ?? 'all';
-    $id_user = auth('api')->user()->id;
+      $class = $request->query('class') ?? 'all';
+      $id_user = auth('api')->user()->id;
+  
+      $data = ProgressPerLesson::where('id_user', $id_user)
+          ->whereHas('lesson', function ($query) use ($class) {
+              if ($class != 'all') {
+                  $query->where('class', $class);
+              }
+          })
+          ->join('lessons', 'progress_per_lesson.id_lesson', '=', 'lessons.id')
+          ->orderBy('lessons.order')
+          ->get()
+          ->map(function ($progress_per_lesson) use ($id_user) {
+              $lesson = $progress_per_lesson->lesson;
+  
+              $lesson['cover'] = env('APP_HOST_NAME') . '/storage/images/' . $lesson['cover'];
+  
+              $lesson['progress'] = $progress_per_lesson->progress;
+  
+              $hasScore = UserQuizScore::where('id_user', $id_user)
+                  ->where('id_lesson', $progress_per_lesson->id_lesson)
+                  ->exists(); 
 
-    $data = ProgressPerLesson::whereHas('lesson', function ($query) use ($class) {
-      if ($class != 'all') {
-        $query->where('class', $class);
-      }
-    })->where('id_user', $id_user)
-      ->join('lessons', 'progress_per_lesson.id_lesson', '=', 'lessons.id')
-      ->orderBy('lessons.order')
-      ->get()
-      ->map(function ($progress_per_lesson) {
-        $lesson = $progress_per_lesson->lesson;
-        $lesson['cover'] = env('APP_HOST_NAME') . '/storage/images/' . $lesson['cover'];
-        $lesson['progress'] = $progress_per_lesson->progress;
-        return $lesson;
-      });
-
-    return response(['data' => $data]);
+              $lesson['score'] = $hasScore;
+  
+              return $lesson;
+        });
+      return response(['data' => $data]);
   }
+  
 }
