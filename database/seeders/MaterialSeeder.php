@@ -1054,18 +1054,16 @@ class MaterialSeeder extends Seeder
 
         //LESSONS 32 DESCRIBING PEOPLE
         $discPeople = [
-            'tall' => ['Tall', 'Tinggi'],
-            'short' => ['Short', 'Pendek'],
-            'fat' => ['Fat', 'Gemuk'],
-            'thin' => ['Thin', 'Kurus'],
-            'old' => ['Old', 'Tua'],
-            'young' => ['Young', 'Muda'],
             'beautiful' => ['Beautiful', 'Cantik'],
             'handsome' => ['Handsome', 'Tampan'],
-            'strong' => ['Strong', 'Kuat'],
-            'weak' => ['Weak', 'Lemah'],
-            'smart' => ['Smart', 'Pintar'],
-            'funny' => ['Funny', 'Lucu'],
+            'tall' => ['Tall', 'Tinggi'],
+            'short' => ['Short', 'Pendek'],
+            'thin' => ['Thin', 'Kurus'],
+            'fat' => ['Fat', 'Gemuk'],
+            'old' => ['Old', 'Tua'],
+            'young' => ['Young', 'Muda'],
+            'bald' => ['Bald', 'Botak'],
+            'curly' => ['Curly', 'Keriting'],
         ];
 
         $order = 1;
