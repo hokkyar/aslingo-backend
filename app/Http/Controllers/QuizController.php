@@ -29,7 +29,7 @@ class QuizController extends Controller
       'correct_answer' => 'required',
     ]);
 
-    $cover = 'default.png';
+    $cover = 'defaultQuiz.jpg';
 
     if ($request->cover) {
       $cover = time() . '_' . uniqid() . '.' . $request->cover->extension();
