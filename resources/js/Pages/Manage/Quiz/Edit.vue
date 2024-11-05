@@ -29,10 +29,22 @@ export default {
                 cover: null,
                 asset_url: null,
             }),
-            selectedAnswer: "", // Variable for selected answer
+            selectedAnswer: "", // initialize selectedAnswer based on correct_answer
             coverImg: "/storage/images/" + this.quiz.cover,
             otherAsset: "/storage/videos/" + this.quiz.asset_url,
         };
+    },
+    mounted() {
+        // Set selectedAnswer based on correct_answer value
+        if (this.form.correct_answer === this.form.col_1) {
+            this.selectedAnswer = "A";
+        } else if (this.form.correct_answer === this.form.col_2) {
+            this.selectedAnswer = "B";
+        } else if (this.form.correct_answer === this.form.col_3) {
+            this.selectedAnswer = "C";
+        } else if (this.form.correct_answer === this.form.col_4) {
+            this.selectedAnswer = "D";
+        }
     },
     watch: {
         selectedAnswer(newVal) {
