@@ -72,6 +72,7 @@ export default {
                 lesson_name: "",
                 cover: null,
                 class: "7",
+                cover_preview: null,
             };
 
             const fileInput = document.getElementById("cover");
@@ -184,6 +185,13 @@ export default {
             this.imageUrl = URL.createObjectURL(selectedFile);
             this.formEdit.cover = selectedFile;
         },
+        previewCover(event) {
+            const file = event.target.files[0];
+            if (file) {
+                this.form.cover = file;
+                this.form.cover_preview = URL.createObjectURL(file);
+            }
+        },
     },
 };
 </script>
@@ -231,15 +239,27 @@ export default {
                             />
                             <InputError class="mt-2" />
                         </div>
-                        <div class="flex flex-col gap-2">
-                            <InputLabel for="cover" value="Cover" />
-                            <input
-                                @input="form.cover = $event.target.files[0]"
-                                id="cover"
-                                type="file"
-                                class="file-input file-input-bordered w-full"
-                                accept="image/*"
+                        <div class="flex flex-col">
+                            <InputLabel
+                                for="cover"
+                                value="Cover"
+                                class="text-lg font-semibold text-gray-700"
                             />
+                            <div class="flex items-center gap-4">
+                                <img
+                                    v-if="form.cover_preview"
+                                    :src="form.cover_preview"
+                                    alt="Cover Preview"
+                                    class="w-40 h-40 object-cover rounded-lg shadow-md"
+                                />
+                                <input
+                                    @change="previewCover"
+                                    id="cover"
+                                    type="file"
+                                    class="block w-full p-2 mt-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-primary1"
+                                    accept="image/*"
+                                />
+                            </div>
                         </div>
                         <div class="flex flex-col gap-2">
                             <InputLabel for="class" value="Class" />
@@ -389,15 +409,11 @@ export default {
             </dialog>
 
             <!-- Modal EDIT -->
-            <dialog ref="editModal" class="modal">
-                <div
-                    class="modal-box max-w-3xl bg-white p-6 rounded-lg shadow-lg"
-                >
-                    <h3 class="font-bold text-2xl text-gray-800 mb-2">
-                        Edit Lesson
-                    </h3>
+            <dialog ref="editModal" class="modal modal-bottom sm:modal-middle">
+                <div class="modal-box bg-white">
+                    <h3 class="font-bold text-lg">Edit Lesson</h3>
                     <div
-                        v-if="showErrors && Object.keys(formEdit).length"
+                        v-if="showErrors && Object.keys(formEdit.errors).length"
                         class="text-danger mb-2"
                     >
                         <small
@@ -408,62 +424,68 @@ export default {
                             {{ error }}
                         </small>
                     </div>
-                    <form @submit.prevent="handleSubmitEdit" class="space-y-6">
+                    <form
+                        @submit.prevent="handleSubmitEdit"
+                        class="mt-2 space-y-6"
+                    >
                         <div>
-                            <InputLabel
-                                for="lesson_name"
-                                value="Lesson Name"
-                                class="text-lg text-gray-700 font-semibold"
-                            />
+                            <InputLabel for="lesson_name" value="Lesson Name" />
                             <TextInput
                                 v-model="formEdit.lesson_name"
                                 id="lesson_name"
                                 type="text"
-                                class="mt-1 block w-full p-3 border border-gray-300 rounded-lg"
+                                class="mt-1 block w-full"
                                 required
                                 autofocus
+                                autocomplete="name"
                             />
-                            <InputError
-                                :message="formEdit.errors.lesson_name"
-                                class="mt-2 text-red-600"
-                            />
+                            <InputError class="mt-2" />
                         </div>
-                        <div class="flex flex-col gap-4">
+                        <div class="flex flex-col">
                             <InputLabel
                                 for="cover"
                                 value="Cover"
-                                class="text-lg text-gray-700 font-semibold"
+                                class="text-lg font-semibold text-gray-700"
                             />
                             <div class="flex items-center gap-4">
                                 <img
+                                    v-if="imageUrl"
                                     :src="imageUrl"
-                                    alt="Cover"
-                                    class="h-40 w-40 object-cover rounded-lg shadow-md"
+                                    alt="Cover Preview"
+                                    class="w-40 h-40 object-cover rounded-lg shadow-md"
                                 />
                                 <input
                                     @change="handleFileChange"
                                     id="cover"
                                     type="file"
-                                    class="file-input file-input-bordered w-full p-2 border border-gray-300"
+                                    class="block w-full p-2 mt-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-primary1"
                                     accept="image/*"
                                 />
                             </div>
                         </div>
-                        <div class="flex items-center gap-4 mt-6">
-                            <button
-                                class="px-6 py-3 bg-primary1 text-white font-semibold rounded-lg"
+                        <div class="flex flex-col gap-2">
+                            <InputLabel for="class" value="Class" />
+                            <select
+                                id="class"
+                                v-model="formEdit.class"
+                                class="select border border-black w-full bg-white"
                             >
-                                Save
-                            </button>
-                            <button
-                                @click="closeEditModal"
-                                type="button"
-                                class="px-6 py-3 bg-black text-gray-800 font-semibold rounded-lg"
-                            >
-                                Close
-                            </button>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                            </select>
                         </div>
+                        <PrimaryButton
+                            title="Save"
+                            :isLink="false"
+                            :disabled="formEdit.processing"
+                        />
                     </form>
+                    <div class="modal-action">
+                        <button @click="closeEditModal" class="btn">
+                            Close
+                        </button>
+                    </div>
                 </div>
             </dialog>
         </div>
