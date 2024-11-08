@@ -25,7 +25,6 @@ class MaterialController extends Controller
     $request->validate([
       'material_name' => 'required',
       'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // 2MB
-      'head_pic' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // 2MB
       'ilustration' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // 2MB
       'video_illustration' => 'nullable|file|mimes:mp4,avi,mov,wmv|max:10048', // tetap 10MB untuk video
       'text_en' => 'required',
@@ -40,10 +39,6 @@ class MaterialController extends Controller
     if ($request->cover) {
       $cover = time() . '_' . uniqid() . '.' . $request->cover->extension();
       $request->cover->storeAs('public/images', $cover);
-    }
-    if ($request->head_pic) {
-      $head_pic = time() . '_' . uniqid() . '.' . $request->head_pic->extension();
-      $request->head_pic->storeAs('public/images', $head_pic);
     }
     if ($request->ilustration) {
       $ilustration = time() . '_' . uniqid() . '.' . $request->ilustration->extension();
@@ -66,7 +61,7 @@ class MaterialController extends Controller
       'text_en' => $request->text_en,
       'text_id' => $request->text_id,
       'cover' => $cover,
-      'head_pic' => $head_pic,
+      'head_pic' => $cover,
       'ilustration' => $ilustration,
       'text_illustration' => $request->text_illustration,
       'video' => $video,
@@ -87,7 +82,6 @@ class MaterialController extends Controller
     $request->validate([
       'material_name' => 'required',
       'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // 2MB
-      'head_pic' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // 2MB
       'ilustration' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // 2MB
       'video_illustration' => 'nullable|file|mimes:mp4,avi,mov,wmv|max:10048', // tetap 10MB untuk video
       'text_en' => 'required',
@@ -107,14 +101,7 @@ class MaterialController extends Controller
       $cover = time() . '_' . uniqid() . '.' . $request->cover->extension();
       $request->cover->storeAs('public/images', $cover);
       $material->cover = $cover;
-    }
-    if ($request->head_pic) {
-      if ($material->head_pic !== 'default.png') {
-        Storage::delete('public/images/' . $material->head_pic);
-      }
-      $head_pic = time() . '_' . uniqid() . '.' . $request->head_pic->extension();
-      $request->head_pic->storeAs('public/images', $head_pic);
-      $material->head_pic = $head_pic;
+      $material->head_pic = $cover;
     }
     if ($request->ilustration) {
       if ($material->ilustration !== 'default.png') {
