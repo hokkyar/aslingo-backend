@@ -7,7 +7,7 @@ import TextInput from "@/Components/TextInput.vue";
 import { Head, useForm } from "@inertiajs/vue3";
 
 export default {
-    props: { lesson: Object },
+    props: { lesson: Object, material: Object },
     components: {
         AuthenticatedLayout,
         InputError,
@@ -15,6 +15,9 @@ export default {
         PrimaryButton,
         TextInput,
         Head,
+    },
+    mounted() {
+      console.log(this.material);  
     },
     data() {
         return {

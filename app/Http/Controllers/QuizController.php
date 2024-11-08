@@ -6,6 +6,7 @@ use App\Models\Lesson;
 use App\Models\Quiz;
 use App\Models\UserAnswer;
 use App\Models\UserQuizScore;
+use App\Models\Material;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -17,7 +18,8 @@ class QuizController extends Controller
   public function create(string $id)
   {
     $lesson = Lesson::find($id);
-    return Inertia::render('Manage/Quiz/Create', ['lesson' => $lesson]);
+    $material = Material::where('id_lesson', $id)->select('material_name', 'video')->get();
+    return Inertia::render('Manage/Quiz/Create', ['lesson' => $lesson, 'material' => $material]);
   }
 
   public function store(Request $request, string $id)
