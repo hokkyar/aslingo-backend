@@ -25,93 +25,82 @@ class QuizController extends Controller
   public function store(Request $request, string $id)
   {
     $request->validate([
-      'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-      'asset_url' => 'nullable|file|mimes:mp4,avi,mov,wmv|max:10048',
-      'content' => 'required',
-      'correct_answer' => 'required',
+        'asset_url' => 'required',
+        'correct_answer' => 'required',
     ]);
+
+    $existingQuiz = Quiz::where('id_lesson', $id)
+        ->where('asset_url', $request->asset_url)
+        ->first();
+
+    if ($existingQuiz) {
+        return redirect()->back()->withErrors(['asset_url' => 'This video is already used in another quiz.']);
+    }
+
+    $questionCount = Quiz::where('id_lesson', $id)->count();
+    
+    $content = $questionCount > 0 ? 'Question ' . ($questionCount + 1) : 'Question 1';
 
     $cover = 'default_quiz.png';
 
-    if ($request->cover) {
-      $cover = time() . '_' . uniqid() . '.' . $request->cover->extension();
-      $request->cover->storeAs('public/images', $cover);
-    }
-
-    $asset_url = null;
-    if ($request->asset_url) {
-      $asset_url = time() . '_' . uniqid() . '.' . $request->asset_url->extension();
-      $request->asset_url->storeAs('public/videos', $asset_url);
-    }
-
     Quiz::create([
-      'id_lesson' => $id,
-      'cover' => $cover,
-      'asset_url' => $asset_url,
-      'content' => $request->content,
-      'correct_answer' => $request->correct_answer,
-      'col_1' => $request->col_1,
-      'col_2' => $request->col_2,
-      'col_3' => $request->col_3,
-      'col_4' => $request->col_4,
+        'id_lesson' => $id,
+        'cover' => $cover,
+        'asset_url' => $request->asset_url,
+        'content' => $content,
+        'correct_answer' => $request->correct_answer,
+        'col_1' => $request->col_1,
+        'col_2' => $request->col_2,
+        'col_3' => $request->col_3,
+        'col_4' => $request->col_4,
     ]);
+    
     return to_route('manage.lesson.detail', $id);
   }
+
 
   public function edit(string $id, string $quiz_id)
   {
+    
     $quiz = Quiz::find($quiz_id);
-    return Inertia::render('Manage/Quiz/Edit', ['lesson_id' => $id, 'quiz' => $quiz]);
+    $material = Material::where('id_lesson', $id)->select('material_name', 'video')->get();
+    return Inertia::render('Manage/Quiz/Edit', ['lesson_id' => $id, 'quiz' => $quiz, 'material' => $material]);
   }
-
+  
   public function update(Request $request, string $id, string $quiz_id)
   {
-    $request->validate([
-      'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-      'asset_url' => 'nullable|file|mimes:mp4,avi,mov,wmv|max:10048',
-      'content' => 'required',
-      'correct_answer' => 'required',
-    ]);
-
-    $quiz = Quiz::find($quiz_id);
-
-    if ($request->cover) {
-      if ($quiz->cover !== 'default.png') {
-        Storage::delete('public/images/' . $quiz->cover);
+      $request->validate([
+          'asset_url' => 'required',
+          'correct_answer' => 'required',
+      ]);
+  
+      $quiz = Quiz::find($quiz_id);
+  
+      $existingQuiz = Quiz::where('id_lesson', $id)
+          ->where('asset_url', $request->asset_url)
+          ->where('id', '!=', $quiz_id) 
+          ->first();
+  
+      if ($existingQuiz) {
+          return redirect()->back()->withErrors(['asset_url' => 'This video is already used in another quiz.']);
       }
-      $cover = time() . '_' . uniqid() . '.' . $request->cover->extension();
-      $request->cover->storeAs('public/images', $cover);
-      $quiz->cover = $cover;
-    }
-
-    if ($request->asset_url) {
-      if ($quiz->video) {
-        Storage::delete('public/videos/' . $quiz->video);
-      }
-      $asset_url = time() . '_' . uniqid() . '.' . $request->asset_url->extension();
-      $request->asset_url->storeAs('public/videos', $asset_url);
-      $quiz->asset_url = $asset_url;
-    }
-
-    $quiz->correct_answer = $request->correct_answer;
-    $quiz->content = $request->content;
-    $quiz->col_1 = $request->col_1;
-    $quiz->col_2 = $request->col_2;
-    $quiz->col_3 = $request->col_3;
-    $quiz->col_4 = $request->col_4;
-    $quiz->save();
-    return to_route('manage.lesson.detail', $id);
+  
+      $quiz->correct_answer = $request->correct_answer;
+      $quiz->content = $request->content;
+      $quiz->col_1 = $request->col_1;
+      $quiz->col_2 = $request->col_2;
+      $quiz->col_3 = $request->col_3;
+      $quiz->col_4 = $request->col_4;
+      $quiz->asset_url = $request->asset_url;
+      $quiz->save();
+  
+      return to_route('manage.lesson.detail', $id);
   }
-
+  
   public function destroy(string $id)
   {
     $quiz = Quiz::find($id);
-    if ($quiz->cover !== 'default.png') {
-      Storage::delete('public/images/' . $quiz->cover);
-    }
-    if ($quiz->asset_url) {
-      Storage::delete('public/videos/' . $quiz->asset_url);
-    }
+
     $quiz->delete();
   }
 
