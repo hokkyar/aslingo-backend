@@ -25,13 +25,13 @@
         </div>
         <div
             v-if="isDropdownOpen"
-            class="absolute w-full bg-white border-l border-r border-b rounded-b-lg shadow-lg z-10"
+            class="absolute w-full bg-white border-l border-r border-b rounded-b-lg shadow-lg z-10 max-h-60 overflow-y-auto"
         >
             <div
                 v-for="(item, index) in options"
                 :key="index"
                 @click="selectOption(item)"
-                class="p-3 hover:bg-grey cursor-pointer rounded-lg"
+                class="p-3 hover:bg-gray-100 cursor-pointer"
             >
                 {{ item.label }}
             </div>
