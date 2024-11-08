@@ -59,7 +59,7 @@
                                 </div>
                                 <div
                                     v-if="isDropdownOpen"
-                                    class="absolute w-full bg-white border-l border-r border-b rounded-b-lg shadow-lg z-10"
+                                    class="absolute w-full bg-white border-l border-r border-b rounded-b-lg shadow-lg z-10 max-h-60 overflow-y-auto"
                                 >
                                     <div
                                         v-for="(item, index) in materialOptions"
