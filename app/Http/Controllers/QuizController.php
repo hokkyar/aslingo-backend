@@ -39,7 +39,7 @@ class QuizController extends Controller
 
     $questionCount = Quiz::where('id_lesson', $id)->count();
     
-    $content = $questionCount > 0 ? 'Question ' . ($questionCount + 1) : 'Question 1';
+    $content =  'Question';
 
     $cover = 'default_quiz.png';
 

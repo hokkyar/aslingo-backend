@@ -239,7 +239,7 @@ export default {
                 >
                     <div
                         class="border rounded-xl bg-primary1 justify-center flex flex-col items-center py-2"
-                        v-for="quiz in quizzes"
+                        v-for="(quiz, index) in quizzes"
                         :key="index"
                     >
                         <div
@@ -257,7 +257,7 @@ export default {
                             <h2
                                 class="text-center p-3 font-bold text-xl text-white uppercase"
                             >
-                                {{ quiz.content }}
+                                Question {{ index + 1 }}
                             </h2>
                         </div>
                         <div class="flex flex-row w-full px-2 gap-2">

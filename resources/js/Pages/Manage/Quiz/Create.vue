@@ -4,6 +4,7 @@ import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
+import CustomeDropdown from "@/Components/CustomeDropdown.vue";
 import { Head, useForm } from "@inertiajs/vue3";
 
 export default {
@@ -14,6 +15,7 @@ export default {
         InputLabel,
         PrimaryButton,
         TextInput,
+        CustomeDropdown,
         Head,
     },
 
@@ -30,10 +32,19 @@ export default {
                 asset_url: "",
             }),
             selectedAnswer: "",
+            materialOptions: this.material.map((item) => ({
+                label: item.material_name,
+                value: item.video,
+            })),
         };
     },
-    mounted() {
-        console.log(this.material);
+    computed: {
+        selectedOptionLabel() {
+            const selected = this.materialOptions.find(
+                (option) => option.value === this.form.asset_url
+            );
+            return selected ? selected.label : "";
+        },
     },
     watch: {
         selectedAnswer(newVal) {
@@ -72,6 +83,9 @@ export default {
         handleSubmit() {
             this.form.post(route("manage.lesson.quiz.store", this.lesson.id));
         },
+        handleSelect(item) {
+            this.form.asset_url = item.value;
+        },
     },
 };
 </script>
@@ -102,49 +116,27 @@ export default {
 
                     <!-- Form -->
                     <form @submit.prevent="handleSubmit" class="space-y-6">
-                        <!-- Asset URL -->
-                        <div class="">
-                            <!-- Dropdown for selecting video -->
-                            <div>
-                                <InputLabel
-                                    for="asset_url"
-                                    value="Select Video for Question"
-                                    class="text-lg font-semibold text-gray-700"
-                                />
-                                <div class="relative">
-                                    <select
-                                        name="asset_url"
-                                        v-model="form.asset_url"
-                                        id="materialSelect"
-                                        class="capitalize block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-primary1 focus:border-transparent text-gray-800 bg-gray-50"
-                                    >
-                                        <option
-                                            value=""
-                                            selected
-                                            disabled
-                                            hidden
-                                        >
-                                            Choose here
-                                        </option>
-                                        <option
-                                            v-for="(item, index) in material"
-                                            :key="index"
-                                            :value="item.video"
-                                        >
-                                            {{ item.material_name }}
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
+                        <!-- Custom Dropdown for selecting video -->
+                        <div>
+                            <InputLabel
+                                for="asset_url"
+                                value="Select Video for Question"
+                                class="text-lg font-semibold text-gray-700"
+                            />
+                            <CustomeDropdown
+                                :options="materialOptions"
+                                v-model="form.asset_url"
+                                @select="handleSelect"
+                            />
+                        </div>
 
-                            <!-- Video Preview -->
-                            <div v-if="form.asset_url">
-                                <video
-                                    controls
-                                    :src="`/storage/videos/${form.asset_url}`"
-                                    class="w-full max-w-lg mx-auto mt-2 rounded-lg shadow-lg"
-                                />
-                            </div>
+                        <!-- Video Preview -->
+                        <div v-if="form.asset_url">
+                            <video
+                                controls
+                                :src="`/storage/videos/${form.asset_url}`"
+                                class="w-full max-w-lg mx-auto mt-2 rounded-lg shadow-lg"
+                            />
                         </div>
 
                         <!-- Choices with Correct Answer Selection -->
@@ -169,7 +161,7 @@ export default {
                                             id="col_1"
                                             type="text"
                                             placeholder="Option A"
-                                            class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-primary1 focus:border-transparent"
+                                            class="w-full p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-primary1 focus:border-transparent"
                                             required
                                         />
                                     </label>
@@ -188,7 +180,7 @@ export default {
                                             id="col_2"
                                             type="text"
                                             placeholder="Option B"
-                                            class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-primary1 focus:border-transparent"
+                                            class="w-full p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-primary1 focus:border-transparent"
                                             required
                                         />
                                     </label>
@@ -207,7 +199,7 @@ export default {
                                             id="col_3"
                                             type="text"
                                             placeholder="Option C"
-                                            class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-primary1 focus:border-transparent"
+                                            class="w-full p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-primary1 focus:border-transparent"
                                             required
                                         />
                                     </label>
@@ -226,7 +218,7 @@ export default {
                                             id="col_4"
                                             type="text"
                                             placeholder="Option D"
-                                            class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-primary1 focus:border-transparent"
+                                            class="w-full p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-primary1 focus:border-transparent"
                                             required
                                         />
                                     </label>
