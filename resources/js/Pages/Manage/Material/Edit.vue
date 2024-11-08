@@ -118,13 +118,12 @@ export default {
     <AuthenticatedLayout>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <h1
+                    class="font-extrabold text-2xl text-gray-800 leading-tight mb-4 text-center"
+                >
+                    Edit Material {{ material.material_name }}
+                </h1>
                 <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <h1
-                        class="font-extrabold text-2xl text-gray-800 leading-tight mb-4 text-center"
-                    >
-                        Edit Material {{ material.material_name }}
-                    </h1>
-
                     <div
                         v-if="showErrors && Object.keys(form.errors).length"
                         class="mb-4 text-danger"
@@ -139,133 +138,134 @@ export default {
                     </div>
 
                     <form @submit.prevent="handleSubmit" class="space-y-6">
-                        <!-- Material Name -->
-                        <div>
-                            <InputLabel
-                                for="material_name"
-                                value="Material Name"
-                                class="text-lg font-semibold text-gray-700"
-                            />
-                            <TextInput
-                                v-model="form.material_name"
-                                id="material_name"
-                                type="text"
-                                class="mt-2 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-primary focus:outline-none"
-                                required
-                                autofocus
-                            />
-                            <InputError
-                                :message="form.errors.material_name"
-                                class="mt-2 text-red-600"
-                            />
-                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <!-- Material Name -->
+                            <div>
+                                <InputLabel
+                                    for="material_name"
+                                    value="Material Name"
+                                    class="text-lg font-semibold text-gray-700"
+                                />
+                                <TextInput
+                                    v-model="form.material_name"
+                                    id="material_name"
+                                    type="text"
+                                    class="mt-2 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-primary focus:outline-none"
+                                    required
+                                    autofocus
+                                />
+                                <InputError
+                                    :message="form.errors.material_name"
+                                    class="mt-2 text-red-600"
+                                />
+                            </div>
 
-                        <!-- Text English -->
-                        <div>
-                            <InputLabel
-                                for="text_en"
-                                value="Text English"
-                                class="text-lg font-semibold text-gray-700"
-                            />
-                            <TextInput
-                                v-model="form.text_en"
-                                id="text_en"
-                                type="text"
-                                class="mt-2 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-primary focus:outline-none"
-                                required
-                            />
-                            <InputError
-                                :message="form.errors.text_en"
-                                class="mt-2 text-red-600"
-                            />
-                        </div>
+                            <!-- Text English -->
+                            <div>
+                                <InputLabel
+                                    for="text_en"
+                                    value="Text English"
+                                    class="text-lg font-semibold text-gray-700"
+                                />
+                                <TextInput
+                                    v-model="form.text_en"
+                                    id="text_en"
+                                    type="text"
+                                    class="mt-2 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-primary focus:outline-none"
+                                    required
+                                />
+                                <InputError
+                                    :message="form.errors.text_en"
+                                    class="mt-2 text-red-600"
+                                />
+                            </div>
 
-                        <!-- Text Indonesia -->
-                        <div>
-                            <InputLabel
-                                for="text_id"
-                                value="Text Indonesia"
-                                class="text-lg font-semibold text-gray-700"
-                            />
-                            <TextInput
-                                v-model="form.text_id"
-                                id="text_id"
-                                type="text"
-                                class="mt-2 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-primary focus:outline-none"
-                                required
-                            />
-                            <InputError
-                                :message="form.errors.text_id"
-                                class="mt-2 text-red-600"
-                            />
+                            <!-- Text Indonesia -->
+                            <div>
+                                <InputLabel
+                                    for="text_id"
+                                    value="Text Indonesia"
+                                    class="text-lg font-semibold text-gray-700"
+                                />
+                                <TextInput
+                                    v-model="form.text_id"
+                                    id="text_id"
+                                    type="text"
+                                    class="mt-2 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-primary focus:outline-none"
+                                    required
+                                />
+                                <InputError
+                                    :message="form.errors.text_id"
+                                    class="mt-2 text-red-600"
+                                />
+                            </div>
+
+                            <!-- Text Illustration -->
+                            <div>
+                                <InputLabel
+                                    for="text_id"
+                                    value="Text Illustration"
+                                    class="text-lg font-semibold text-gray-700"
+                                />
+                                <TextInput
+                                    v-model="form.text_illustration"
+                                    id="text_illustration"
+                                    type="text"
+                                    class="mt-2 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-primary focus:outline-none"
+                                    required
+                                />
+                                <InputError
+                                    :message="form.errors.text_illustration"
+                                    class="mt-2 text-red-600"
+                                />
+                            </div>
                         </div>
 
                         <!-- Image Previews and Inputs -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <!-- Cover -->
-                            <div class="flex items-center space-x-4">
-                                <img
-                                    :src="coverImg"
-                                    alt="Cover Image"
-                                    class="w-40 h-40 object-cover rounded-lg shadow-md"
-                                    v-if="coverImg"
-                                />
-                                <input
-                                    @change="handleCover"
-                                    id="cover"
-                                    type="file"
-                                    class="block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-primary"
-                                    accept="image/*"
-                                />
-                            </div>
-
-                            <!-- Head Picture -->
-                            <div class="flex items-center space-x-4">
-                                <img
-                                    :src="headPic"
-                                    alt="Head Picture"
-                                    class="w-40 h-40 object-cover rounded-lg shadow-md"
-                                    v-if="headPic"
-                                />
-                                <input
-                                    @change="handleHeadPic"
-                                    id="head_pic"
-                                    type="file"
-                                    class="block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-primary"
-                                    accept="image/*"
-                                />
-                            </div>
-
-                            <!-- Illustration -->
-                            <div class="flex items-center space-x-4">
-                                <img
-                                    :src="ilustration"
-                                    alt="Illustration Image"
-                                    class="w-40 h-40 object-cover rounded-lg shadow-md"
-                                    v-if="ilustration"
-                                />
-                                <input
-                                    @change="handleIlustration"
-                                    id="illustration"
-                                    type="file"
-                                    class="block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-primary"
-                                    accept="image/*"
-                                />
-                            </div>
-
-                            <!-- Video Illustration -->
-                            <div class="flex items-center space-x-4">
-                                <video
-                                    v-if="videoIllustration"
-                                    controls
-                                    class="w-40 h-40 object-cover rounded-lg shadow-md"
-                                >
-                                    <source
-                                        :src="videoIllustration"
-                                        type="video/mp4"
+                            <div class="space-y-4">
+                                <!-- Cover -->
+                                <div class="flex items-center space-x-4">
+                                    <img
+                                        :src="coverImg"
+                                        alt="Cover Image"
+                                        class="w-40 h-40 object-cover rounded-lg shadow-md"
+                                        v-if="coverImg"
                                     />
-                                    Your browser does not support the video tag.
-                                </video>
+                                    <input
+                                        @change="handleCover"
+                                        id="cover"
+                                        type="file"
+                                        class="block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-primary"
+                                        accept="image/*"
+                                    />
+                                </div>
+
+                                <!-- Illustration -->
+                                <div class="flex items-center space-x-4">
+                                    <img
+                                        :src="ilustration"
+                                        alt="Illustration Image"
+                                        class="w-40 h-40 object-cover rounded-lg shadow-md"
+                                        v-if="ilustration"
+                                    />
+                                    <input
+                                        @change="handleIlustration"
+                                        id="illustration"
+                                        type="file"
+                                        class="block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-primary"
+                                        accept="image/*"
+                                    />
+                                </div>
+                            </div>
+                            <div class="items-center space-y-4">
+                                <div v-if="videoIllustration">
+                                    <video
+                                        controls
+                                        :src="videoIllustration"
+                                        class="w-full max-w-sm mx-auto mt-2 rounded-lg shadow-lg"
+                                    />
+                                </div>
                                 <input
                                     @change="handleVideo"
                                     id="video_illustration"
@@ -275,6 +275,7 @@ export default {
                                 />
                             </div>
                         </div>
+                        <!-- Video Illustration -->
 
                         <!-- Save Button -->
                         <div class="flex justify-end">
