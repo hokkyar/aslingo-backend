@@ -203,7 +203,7 @@ export default {
                             <!-- Text Illustration -->
                             <div>
                                 <InputLabel
-                                    for="text_id"
+                                    for="text_illustration"
                                     value="Text Illustration"
                                     class="text-lg font-semibold text-gray-700"
                                 />
@@ -212,7 +212,6 @@ export default {
                                     id="text_illustration"
                                     type="text"
                                     class="mt-2 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-primary focus:outline-none"
-                                    required
                                 />
                                 <InputError
                                     :message="form.errors.text_illustration"
