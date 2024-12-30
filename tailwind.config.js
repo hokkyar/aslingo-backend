@@ -32,6 +32,7 @@ export default {
             danger2: "#800000",
             yellow: "#FFB22C",
             yellow2: "#FF8F00",
+            gray: "#BCCCDC",
         },
         extend: {
             fontFamily: {
