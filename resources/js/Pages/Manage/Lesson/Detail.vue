@@ -3,6 +3,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { Head, Link, router } from "@inertiajs/vue3";
 import Sortable from "sortablejs";
+import Breadcrumb from "@/Components/Breadcrumb.vue";
 
 export default {
     props: { lesson: Object, materials: Array, quizzes: Array },
@@ -11,6 +12,7 @@ export default {
         Head,
         Link,
         PrimaryButton,
+        Breadcrumb,
     },
     data() {
         return {
@@ -136,6 +138,19 @@ export default {
             info: false,
         });
     },
+    computed: {
+        breadcrumb() {
+            return [
+                {
+                    label: "Manage Lessons",
+                    url: route("manage.lesson.index"),
+                },
+                {
+                    label: this.lesson.lesson_name,
+                },
+            ];
+        },
+    },
 };
 </script>
 
@@ -143,11 +158,9 @@ export default {
     <Head title="Show Lesson" />
 
     <AuthenticatedLayout>
-        <!-- <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Show Lesson : {{ lesson.lesson_name }}
-            </h2>
-        </template> -->
+        <template #header>
+            <Breadcrumb :items="breadcrumb" />
+        </template>
 
         <!-- LIST MATERIAL -->
         <div class="pb-12">
@@ -178,7 +191,7 @@ export default {
                     class="border-2 rounded-b-2xl border-primary1 p-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4"
                 >
                     <div
-                        class="border rounded-xl bg-primary1 justify-center flex flex-col items-center py-2"
+                        class="rounded-xl bg-primary1 justify-center flex flex-col items-center py-2"
                         v-for="(material, index) in materials"
                         :key="index"
                     >
@@ -238,7 +251,7 @@ export default {
                     class="border-2 rounded-b-2xl border-primary1 p-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4"
                 >
                     <div
-                        class="border rounded-xl bg-primary1 justify-center flex flex-col items-center py-2"
+                        class="rounded-xl bg-primary1 justify-center flex flex-col items-center py-2"
                         v-for="(quiz, index) in quizzes"
                         :key="index"
                     >
@@ -246,7 +259,7 @@ export default {
                             @click="showQuizModal(quiz)"
                             class="hover:opacity-80 transition duration-300 ease-in-out cursor-pointer"
                         >
-                            <figure class="w-48 h-56 border-2 overflow-hidden">
+                            <figure class="w-48 h-56 overflow-hidden">
                                 <img
                                     class="w-full h-full object-cover"
                                     :src="'/storage/images/' + quiz.cover"

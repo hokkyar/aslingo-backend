@@ -5,9 +5,10 @@ import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { Head, useForm } from "@inertiajs/vue3";
+import Breadcrumb from "@/Components/Breadcrumb.vue";
 
 export default {
-    props: { lesson_id: String, material: Object },
+    props: { lesson_id: String, material: Object, lesson: Object },
     components: {
         AuthenticatedLayout,
         Head,
@@ -15,6 +16,7 @@ export default {
         InputLabel,
         PrimaryButton,
         TextInput,
+        Breadcrumb,
     },
     data() {
         return {
@@ -109,6 +111,23 @@ export default {
             this.form.video_illustration = selectedFile;
         },
     },
+    computed: {
+        breadcrumb() {
+            return [
+                {
+                    label: "Manage Lessons",
+                    url: route("manage.lesson.index"),
+                },
+                {
+                    label: this.lesson.lesson_name,
+                    url: route("manage.lesson.detail", this.lesson.id),
+                },
+                {
+                    label: "Edit Material",
+                },
+            ];
+        },
+    },
 };
 </script>
 
@@ -116,6 +135,9 @@ export default {
     <Head title="Edit Material" />
 
     <AuthenticatedLayout>
+        <template #header>
+            <Breadcrumb :items="breadcrumb" />
+        </template>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <h1

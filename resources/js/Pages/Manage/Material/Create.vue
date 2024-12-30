@@ -5,6 +5,7 @@ import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { Head, useForm } from "@inertiajs/vue3";
+import Breadcrumb from "@/Components/Breadcrumb.vue";
 
 export default {
     props: {
@@ -16,6 +17,7 @@ export default {
         InputLabel,
         PrimaryButton,
         TextInput,
+        Breadcrumb,
         Head,
     },
     data() {
@@ -71,6 +73,23 @@ export default {
             }
         },
     },
+    computed: {
+        breadcrumb() {
+            return [
+                {
+                    label: "Manage Lessons",
+                    url: route("manage.lesson.index"),
+                },
+                {
+                    label: this.lesson.lesson_name,
+                    url: route("manage.lesson.detail", this.lesson.id),
+                },
+                {
+                    label: "Add Material",
+                },
+            ];
+        },
+    },
 };
 </script>
 
@@ -78,6 +97,9 @@ export default {
     <Head title="Create Material" />
 
     <AuthenticatedLayout>
+        <template #header>
+            <Breadcrumb :items="breadcrumb" />
+        </template>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <!-- Header -->

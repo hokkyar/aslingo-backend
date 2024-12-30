@@ -74,7 +74,8 @@ class MaterialController extends Controller
   public function edit(string $id, string $material_id)
   {
     $material = Material::find($material_id);
-    return Inertia::render('Manage/Material/Edit', ['lesson_id' => $id, 'material' => $material]);
+    $lesson = Lesson::find($id);
+    return Inertia::render('Manage/Material/Edit', ['lesson_id' => $id, 'lesson' => $lesson, 'material' => $material]);
   }
 
   public function update(Request $request, string $id, string $material_id)

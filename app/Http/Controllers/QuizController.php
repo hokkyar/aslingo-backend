@@ -64,7 +64,8 @@ class QuizController extends Controller
     
     $quiz = Quiz::find($quiz_id);
     $material = Material::where('id_lesson', $id)->select('material_name', 'video')->get();
-    return Inertia::render('Manage/Quiz/Edit', ['lesson_id' => $id, 'quiz' => $quiz, 'material' => $material]);
+    $lesson = Lesson::find($id);
+    return Inertia::render('Manage/Quiz/Edit', ['lesson_id' => $id, 'quiz' => $quiz, 'material' => $material, 'lesson' => $lesson]);
   }
   
   public function update(Request $request, string $id, string $quiz_id)

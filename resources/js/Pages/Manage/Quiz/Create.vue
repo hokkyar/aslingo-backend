@@ -6,6 +6,7 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import CustomeDropdown from "@/Components/CustomeDropdown.vue";
 import { Head, useForm } from "@inertiajs/vue3";
+import Breadcrumb from "@/Components/Breadcrumb.vue";
 
 export default {
     props: { lesson: Object, material: Object },
@@ -17,6 +18,7 @@ export default {
         TextInput,
         CustomeDropdown,
         Head,
+        Breadcrumb,
     },
 
     data() {
@@ -87,6 +89,23 @@ export default {
             this.form.asset_url = item.value;
         },
     },
+    computed: {
+        breadcrumb() {
+            return [
+                {
+                    label: "Manage Lessons",
+                    url: route("manage.lesson.index"),
+                },
+                {
+                    label: this.lesson.lesson_name,
+                    url: route("manage.lesson.detail", this.lesson.id),
+                },
+                {
+                    label: "Add Quiz",
+                },
+            ];
+        },
+    },
 };
 </script>
 
@@ -94,6 +113,9 @@ export default {
     <Head title="Create Quiz" />
 
     <AuthenticatedLayout>
+        <template #header>
+            <Breadcrumb :items="breadcrumb" />
+        </template>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white p-6 shadow-lg rounded-lg">

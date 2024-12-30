@@ -7,6 +7,7 @@ import TextInput from "@/Components/TextInput.vue";
 import { Head, Link, router, useForm } from "@inertiajs/vue3";
 import Swal from "sweetalert2";
 import Sortable from "sortablejs";
+import Breadcrumb from "@/Components/Breadcrumb.vue";
 
 export default {
     components: {
@@ -17,6 +18,7 @@ export default {
         TextInput,
         Head,
         Link,
+        Breadcrumb,
     },
     props: { lessons: Array },
     data() {
@@ -193,11 +195,24 @@ export default {
             }
         },
     },
+    computed: {
+        breadcrumb() {
+            return [
+                {
+                    label: "Manage Lessons",
+                    url: route("manage.lesson.index"),
+                },
+            ];
+        },
+    },
 };
 </script>
 
 <template>
     <AuthenticatedLayout>
+        <template #header>
+            <Breadcrumb :items="breadcrumb" />
+        </template>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <PrimaryButton
                 class="my-5"
